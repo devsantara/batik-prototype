@@ -8,6 +8,12 @@
  * this barrel would resolve to `index.ts` and hash to a different variable than
  * the one the stylesheet actually defines.
  */
+export {
+  Accordion,
+  type AccordionItem,
+  type AccordionProps,
+  type AccordionVariant,
+} from '#/components/accordion';
 export { Badge, type BadgeProps, type BadgeTone } from '#/components/badge';
 export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from '#/components/button';
 export { Card, type CardPadding, type CardProps, type CardVariant } from '#/components/card';

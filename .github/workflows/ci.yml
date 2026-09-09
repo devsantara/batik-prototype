@@ -19,6 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # The changeset gate below diffs against `origin/main`, and the default
+          # shallow clone has neither that ref nor enough history to find where
+          # this branch left it. Same reason release.yml asks for it.
+          fetch-depth: 0
 
       # setup-vp installs Vite+, Node and pnpm, and caches package-manager data.
       # The version is pinned deliberately: the docs call out that the `v1` tag

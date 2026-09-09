@@ -44,5 +44,11 @@ jobs:
           commit: 'chore(release): version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+          # Must be `NPM_TOKEN`, not the `NODE_AUTH_TOKEN` that actions/setup-node
+          # documents. Nothing here runs setup-node - setup-vp installs the
+          # toolchain - so no .npmrc references NODE_AUTH_TOKEN and it would be
+          # inert. changesets/action writes the .npmrc itself, keyed on this name.
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
           NPM_CONFIG_PROVENANCE: true

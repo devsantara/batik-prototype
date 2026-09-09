@@ -44,6 +44,7 @@ import { ocean } from '@batik-prototype/theme-ocean';
 | [`@batik-prototype/example`](./apps/example#readme)                | React + Vite app that consumes all of the above        |
 | [`@batik-prototype/config`](./packages/config#readme)              | Shared TypeScript and Vite+ configuration _(internal)_ |
 | [`@batik-prototype/create-package`](./tools/create-package#readme) | The generator behind `vp create package` _(internal)_  |
+| [`@batik-prototype/create-theme`](./tools/create-theme#readme)     | The generator behind `vp create theme` _(internal)_    |
 
 [`themes/`](./themes#readme) is the guide to writing a theme of your own.
 

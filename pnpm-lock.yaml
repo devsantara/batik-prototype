@@ -329,6 +329,28 @@ importers:
         specifier: 'catalog:'
         version: 7.0.2
 
+  tools/create-theme:
+    dependencies:
+      '@batik-prototype/create-package':
+        specifier: workspace:*
+        version: link:../create-package
+      bingo:
+        specifier: 'catalog:'
+        version: 0.9.3
+      zod:
+        specifier: 'catalog:'
+        version: 3.25.76
+    devDependencies:
+      '@batik-prototype/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
 packages:
 
   '@andrewbranch/untar.js@1.0.4':

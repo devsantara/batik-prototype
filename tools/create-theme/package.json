@@ -1,14 +1,15 @@
 {
-  "name": "@batik-prototype/create-package",
+  "name": "@batik-prototype/create-theme",
   "version": "0.0.0",
   "private": true,
-  "description": "Scaffolds a publishable Batik package with the workspace conventions already wired",
+  "description": "Scaffolds a Batik theme package that renders correctly before a single colour is chosen",
   "keywords": [
     "design system",
     "generator",
+    "theme",
     "vite-plus-generator"
   ],
-  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/tools/create-package#readme",
+  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/tools/create-theme#readme",
   "bugs": {
     "url": "https://github.com/devsantara/batik-prototype/issues"
   },
@@ -17,14 +18,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devsantara/batik-prototype.git",
-    "directory": "tools/create-package"
+    "directory": "tools/create-theme"
   },
   "bin": "./bin/index.ts",
   "type": "module",
-  "exports": {
-    "./workspace": "./src/workspace.ts"
-  },
   "dependencies": {
+    "@batik-prototype/create-package": "workspace:*",
     "bingo": "catalog:",
     "zod": "catalog:"
   },

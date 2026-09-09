@@ -39,6 +39,12 @@ node bin/index.ts --name color --description "..."
 vp test run tools/create-package
 ```
 
+`src/workspace.ts` is also this package's one export,
+`@batik-prototype/create-package/workspace`. It is what
+[`create-theme`](../create-theme#readme) uses to find the workspace root and read the root
+manifest and licence: both generators have to agree on where the repo root is and who
+publishes these packages, and one of them had to own that.
+
 The generator is a [Bingo](https://www.create.bingo) template.
 [`src/template.ts`](./src/template.ts) declares the options as Zod schemas and
 returns the files to write; [`bin/index.ts`](./bin/index.ts) is the CLI entry.

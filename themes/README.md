@@ -110,15 +110,19 @@ against a white page is invisible against a near-black one, so it belongs in `li
 ## Adding a theme to this repo
 
 ```bash
-mkdir themes/violet
+vp create theme -- --name violet --description "Deep violet with a soft dusk scheme"
 ```
 
-1. Copy `package.json`, `tsconfig.json`, `vite.config.ts` and `LICENSE` from
-   [`themes/ocean`](./ocean), changing the name, description and `repository.directory`.
-2. Write `src/violet.ts` and re-export it from `src/index.ts`.
-3. `vp install` to link it, then `pnpm changeset` — CI fails a PR that changes a package
-   without one.
-4. Add it to the picker in [`apps/example`](../apps/example#readme) so it is exercised.
+That scaffolds `themes/violet` with the manifest, tsconfig, build config and licence
+already right, and runs `vp install`. What it generates is a working theme rather than a
+stub — a violet accent over the default palette, and a neutral dark ground to retint — so
+you can see it in the example app before choosing a single colour. See
+[`create-theme`](../tools/create-theme#readme).
+
+Two things the generator leaves to you:
+
+1. `pnpm changeset` — CI fails a PR that changes a package without one.
+2. Add it to the picker in [`apps/example`](../apps/example#readme), so it is exercised.
 
 The theme packages are React-free and depend on nothing but `@batik-prototype/core` and
 `@stylexjs/stylex`, both as peers. They build with

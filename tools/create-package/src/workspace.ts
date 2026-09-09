@@ -9,6 +9,13 @@ import { fileURLToPath } from 'node:url';
  */
 export const PACKAGES_DIRECTORY = 'packages';
 
+/**
+ * Where a generated theme lands. Matches the `themes/*` glob in
+ * pnpm-workspace.yaml, and is consumed by `@batik-prototype/create-theme`
+ * through this module's `./workspace` export.
+ */
+export const THEMES_DIRECTORY = 'themes';
+
 /** The file that marks the workspace root. */
 const WORKSPACE_MARKER = 'pnpm-workspace.yaml';
 
@@ -44,7 +51,7 @@ export function findWorkspaceRoot(from: string = HERE): string {
     const parent = path.dirname(directory);
 
     if (parent === directory) {
-      throw new Error(`create-package: no ${WORKSPACE_MARKER} found above ${from}`);
+      throw new Error(`batik: no ${WORKSPACE_MARKER} found above ${from}`);
     }
 
     directory = parent;

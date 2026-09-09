@@ -10,6 +10,11 @@ export default defineConfig({
         description: 'A publishable Batik package under packages/',
         template: './tools/create-package',
       },
+      {
+        name: 'theme',
+        description: 'A Batik theme under themes/, generated ready to render',
+        template: './tools/create-theme',
+      },
     ],
   },
   staged: {

@@ -70,7 +70,15 @@ export default defineConfig({
         // after one build that set includes the dist it just wrote. Excluding
         // dist stops the previous output from invalidating the fingerprint that
         // produced it.
-        input: [{ auto: true }, '!dist/**'],
+        //
+        // `tsconfig.tsbuildinfo` needs the same treatment for a different
+        // reason: `incremental` in typescript/tsconfig.base.json makes tsc both
+        // read and write it, and a path that is read and written in the same
+        // run is never cacheable - Vite Task refuses the entry outright. It is
+        // tsc's own incremental state, not a build product, so it is excluded
+        // from outputs too rather than archived and restored.
+        input: [{ auto: true }, '!dist/**', '!node_modules/.cache/**'],
+        output: [{ auto: true }, '!node_modules/.cache/**'],
       },
 
       // A watcher never exits 0, so it would never write a cache entry anyway.

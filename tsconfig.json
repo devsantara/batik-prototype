@@ -15,5 +15,10 @@
   // references, since tsdown builds the packages and tsgolint checks them.
   "extends": "@batik-prototype/config/typescript/tsconfig.node.json",
 
-  "include": ["vite.config.ts", "packages/*/vite.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "apps/*/vite.config.ts",
+    "packages/*/vite.config.ts",
+    "themes/*/vite.config.ts"
+  ]
 }

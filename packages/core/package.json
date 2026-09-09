@@ -1,6 +1,6 @@
 {
   "name": "@batik-prototype/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Themeable StyleX components and the design token contract every Batik theme overrides",
   "keywords": [
     "components",

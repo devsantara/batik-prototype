@@ -1,5 +1,18 @@
 # @batik-prototype/core
 
+## 0.2.0
+
+### Minor Changes
+
+- [#2](https://github.com/devsantara/batik-prototype/pull/2) [`7cb629d`](https://github.com/devsantara/batik-prototype/commit/7cb629d15b913364691cbaaa79857cb60146f53d) Thanks [@edwintantawi](https://github.com/edwintantawi)! - Add `Accordion`, a stack of disclosure rows in the same token-driven shape as the rest of
+  the set: `contained` groups the rows on one surface and divides them with the border token,
+  `separated` gives each row its own outline.
+
+  It is `<details>` and `<summary>` underneath, so the keyboard, the screen reader and
+  find-in-page behaviour are the platform's. `exclusive` names the group rather than tracking
+  which row is open, which is why the rows arrive as an `items` array instead of as children:
+  nothing has to read the group's name or variant out of React context to render.
+
 ## 0.1.0
 
 ### Minor Changes

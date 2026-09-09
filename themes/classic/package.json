@@ -1,6 +1,6 @@
 {
   "name": "@batik-prototype/theme-classic",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The default Batik theme: cool slate neutrals with a confident blue accent, plus a dark scheme",
   "keywords": [
     "classic",

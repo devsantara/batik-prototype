@@ -1,5 +1,12 @@
 # @batik-prototype/theme-ocean
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`7cb629d`](https://github.com/devsantara/batik-prototype/commit/7cb629d15b913364691cbaaa79857cb60146f53d)]:
+  - @batik-prototype/core@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes

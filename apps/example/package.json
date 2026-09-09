@@ -1,0 +1,33 @@
+{
+  "name": "@batik-prototype/example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "React + Vite app that consumes the Batik design system and switches between the published themes",
+  "license": "MIT",
+  "author": "devsantara",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devsantara/batik-prototype.git",
+    "directory": "apps/example"
+  },
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*.js"
+  },
+  "dependencies": {
+    "@batik-prototype/core": "workspace:*",
+    "@batik-prototype/theme-classic": "workspace:*",
+    "@batik-prototype/theme-ocean": "workspace:*",
+    "@batik-prototype/theme-sunset": "workspace:*",
+    "@stylexjs/stylex": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@batik-prototype/config": "workspace:*",
+    "@stylexjs/unplugin": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:"
+  }
+}

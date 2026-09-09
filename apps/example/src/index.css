@@ -1,0 +1,25 @@
+/*
+ * The only hand-written CSS in the app.
+ *
+ * StyleX has no output of its own to link: in dev the plugin serves the
+ * compiled stylesheet from a middleware, and in a production build it appends
+ * it to a CSS asset already in the bundle. Importing this file from the entry
+ * is what creates that asset - and it is also the right home for the handful of
+ * document-level rules that have no element to hang a `stylex.props()` off.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}

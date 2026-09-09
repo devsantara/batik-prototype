@@ -1,0 +1,9 @@
+{
+  "extends": "@batik-prototype/config/typescript/tsconfig.react.json",
+  "compilerOptions": {
+    // Not a published package, so no library overlay. `vite/client` is the one
+    // ambient type set an app needs on top of the browser preset.
+    "types": ["vite/client"]
+  },
+  "include": ["src"]
+}

@@ -36,14 +36,17 @@ anyway to compile your own StyleX. See [Setting up the compiler](#setting-up-the
 | `Input`                        | Three sizes, `invalid`, disabled, themed placeholder      |
 | `Card`                         | `elevated` / `outlined`, four padding steps               |
 | `Badge`                        | Five tones: neutral, accent, success, warning, danger     |
+| `Accordion`                    | `contained` / `separated`, optional `exclusive` rows      |
 | `ThemeProvider`                | Applies a theme, resolves the colour scheme               |
 | `useTheme` / `useColorScheme`  | Read the active theme and the resolved scheme             |
 | `usePreferredColorScheme`      | The OS preference on its own, kept live                   |
 | `defineTheme` / `resolveTheme` | The theme contract, also at `@batik-prototype/core/theme` |
 
-Components are plain elements underneath — `<button>`, `<input>`, `<div>`, `<span>` — and
-forward every prop those accept, `ref` included. There is no wrapper, no portal and no
-context lookup in the render path.
+Components are plain elements underneath — `<button>`, `<input>`, `<div>`, `<span>`,
+`<details>` — and forward every prop those accept, `ref` included. There is no wrapper, no
+portal and no context lookup in the render path. `Accordion` takes its rows as an `items`
+array for that last reason: a compound `<Accordion.Item>` would have to read the group's
+variant and its `exclusive` group name out of context on every render.
 
 ## Themes
 

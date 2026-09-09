@@ -1,6 +1,7 @@
-import { Badge, Button, Card, Input } from '@batik-prototype/core';
+import { Accordion, Badge, Button, Card, Input, type AccordionItem } from '@batik-prototype/core';
 import { color } from '@batik-prototype/core/tokens/color.stylex';
 import { font } from '@batik-prototype/core/tokens/font.stylex';
+import { radius } from '@batik-prototype/core/tokens/shape.stylex';
 import { space } from '@batik-prototype/core/tokens/space.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { useId, type ReactNode } from 'react';
@@ -33,7 +34,72 @@ const styles = stylex.create({
   cardTitle: { fontSize: font.sizeMd, fontWeight: font.weightSemibold, margin: 0 },
 
   cardBody: { color: color.muted, fontSize: font.sizeSm, margin: 0 },
+
+  code: {
+    backgroundColor: color.neutralSurface,
+    borderRadius: radius.sm,
+    color: color.onNeutralSurface,
+    fontFamily: font.familyMono,
+    fontSize: '0.85em',
+    paddingInline: space.xs,
+  },
 });
+
+const FAQ: readonly AccordionItem[] = [
+  {
+    id: 'tokens',
+    title: 'Where do the colours come from?',
+    content: (
+      <p {...stylex.props(styles.cardBody)}>
+        Every one of them is a StyleX variable declared by{' '}
+        <code {...stylex.props(styles.code)}>@batik-prototype/core</code>. A theme overrides the
+        variable; this row never learns which theme won.
+      </p>
+    ),
+    defaultOpen: true,
+  },
+  {
+    id: 'platform',
+    title: 'What is this built on?',
+    content: (
+      <p {...stylex.props(styles.cardBody)}>
+        A <code {...stylex.props(styles.code)}>&lt;details&gt;</code> and a{' '}
+        <code {...stylex.props(styles.code)}>&lt;summary&gt;</code>, so the keyboard and the screen
+        reader work without a line of JavaScript. Opening one row closes the others because they
+        share a <code {...stylex.props(styles.code)}>name</code>, which is a browser feature rather
+        than a component one.
+      </p>
+    ),
+  },
+  {
+    id: 'locked',
+    title: 'A row that cannot be opened',
+    content: <p {...stylex.props(styles.cardBody)}>Unreachable, by design.</p>,
+    disabled: true,
+  },
+];
+
+const SEPARATED: readonly AccordionItem[] = [
+  {
+    id: 'radius',
+    title: 'Ocean rounds the corners',
+    content: (
+      <p {...stylex.props(styles.cardBody)}>
+        The radius token moves and every row follows, in both variants at once.
+      </p>
+    ),
+  },
+  {
+    id: 'divider',
+    title: 'Sunset squares them off',
+    content: (
+      <p {...stylex.props(styles.cardBody)}>
+        In the contained variant the divider between rows is the border token, so a theme that
+        thickens its outlines thickens these too.
+      </p>
+    ),
+  },
+];
 
 function Section({
   title,
@@ -170,6 +236,16 @@ export function Showcase() {
               </p>
             </div>
           </Card>
+        </div>
+      </Section>
+
+      <Section
+        title="Accordion"
+        caption="Contained shares one surface and divides it; separated gives every row its own."
+      >
+        <div {...stylex.props(styles.grid)}>
+          <Accordion exclusive items={FAQ} />
+          <Accordion variant="separated" items={SEPARATED} />
         </div>
       </Section>
     </>

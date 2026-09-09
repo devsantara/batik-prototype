@@ -1,4 +1,4 @@
-# `@batik/config`
+# `@batik-prototype/config`
 
 Every shared build configuration in the Batik monorepo: the TypeScript presets and the
 Vite+ build config. Internal (`private`), consumed through `workspace:*`.
@@ -26,19 +26,19 @@ drift apart.
 The presets split along the two axes that actually vary across the repo — **where code
 runs** and **whether it publishes types** — so each file has exactly one job.
 
-| File                    | Subpath                                          | Adds                                               |
-| ----------------------- | ------------------------------------------------ | -------------------------------------------------- |
-| `tsconfig.base.json`    | `@batik/config/typescript/tsconfig.base.json`    | Strictness, module semantics, check-only emit      |
-| `tsconfig.browser.json` | `@batik/config/typescript/tsconfig.browser.json` | `lib: ES2022 + DOM`, on top of `base`              |
-| `tsconfig.node.json`    | `@batik/config/typescript/tsconfig.node.json`    | `lib: ES2024`, `types: ["node"]`, on top of `base` |
-| `tsconfig.react.json`   | `@batik/config/typescript/tsconfig.react.json`   | `jsx: react-jsx`, on top of `browser`              |
-| `tsconfig.library.json` | `@batik/config/typescript/tsconfig.library.json` | `declaration`, `declarationMap` _(overlay)_        |
+| File                    | Subpath                                                    | Adds                                               |
+| ----------------------- | ---------------------------------------------------------- | -------------------------------------------------- |
+| `tsconfig.base.json`    | `@batik-prototype/config/typescript/tsconfig.base.json`    | Strictness, module semantics, check-only emit      |
+| `tsconfig.browser.json` | `@batik-prototype/config/typescript/tsconfig.browser.json` | `lib: ES2022 + DOM`, on top of `base`              |
+| `tsconfig.node.json`    | `@batik-prototype/config/typescript/tsconfig.node.json`    | `lib: ES2024`, `types: ["node"]`, on top of `base` |
+| `tsconfig.react.json`   | `@batik-prototype/config/typescript/tsconfig.react.json`   | `jsx: react-jsx`, on top of `browser`              |
+| `tsconfig.library.json` | `@batik-prototype/config/typescript/tsconfig.library.json` | `declaration`, `declarationMap` _(overlay)_        |
 
 The subpaths keep the filename but hide `src/`, so moving a file never moves the specifier
 consumers write. That does mean `extends` resolves **only** through `exports` — the key no
 longer matches its own path, so a resolver that falls back to a literal directory lookup
 finds nothing. Verified against both checkers this repo runs: tsgolint (`vp check`) and
-`tsc` 7.0.2 resolve it, and `tsc --showConfig` on `@batik/math` confirms the whole
+`tsc` 7.0.2 resolve it, and `tsc --showConfig` on `@batik-prototype/math` confirms the whole
 `base` → `browser` → `library` chain is applied rather than silently skipped. A tool
 pinned to classic `node10` resolution would not find these; nothing here is.
 
@@ -54,8 +54,8 @@ Tokens, theme, and utility packages — publishable, no JSX:
 // packages/tokens/tsconfig.json
 {
   "extends": [
-    "@batik/config/typescript/tsconfig.browser.json",
-    "@batik/config/typescript/tsconfig.library.json",
+    "@batik-prototype/config/typescript/tsconfig.browser.json",
+    "@batik-prototype/config/typescript/tsconfig.library.json",
   ],
   "include": ["src"],
 }
@@ -67,8 +67,8 @@ Component and hook packages — publishable, JSX:
 // packages/components/tsconfig.json
 {
   "extends": [
-    "@batik/config/typescript/tsconfig.react.json",
-    "@batik/config/typescript/tsconfig.library.json",
+    "@batik-prototype/config/typescript/tsconfig.react.json",
+    "@batik-prototype/config/typescript/tsconfig.library.json",
   ],
   "include": ["src"],
 }
@@ -79,7 +79,7 @@ Docs and example apps — not published, so no `tsconfig.library.json`:
 ```jsonc
 // apps/docs/tsconfig.json
 {
-  "extends": "@batik/config/typescript/tsconfig.react.json",
+  "extends": "@batik-prototype/config/typescript/tsconfig.react.json",
   "compilerOptions": {
     // `types` is `[]` by default; apps opt into the ambient types they need.
     "types": ["vite/client"],
@@ -93,8 +93,8 @@ CLIs, codemods, and other Node-only packages:
 ```jsonc
 {
   "extends": [
-    "@batik/config/typescript/tsconfig.node.json",
-    "@batik/config/typescript/tsconfig.library.json",
+    "@batik-prototype/config/typescript/tsconfig.node.json",
+    "@batik-prototype/config/typescript/tsconfig.library.json",
   ],
   "include": ["src"],
 }
@@ -177,8 +177,8 @@ in is exactly:
 ```jsonc
 {
   "extends": [
-    "@batik/config/typescript/tsconfig.react.json",
-    "@batik/config/typescript/tsconfig.library.json",
+    "@batik-prototype/config/typescript/tsconfig.react.json",
+    "@batik-prototype/config/typescript/tsconfig.library.json",
   ],
   "compilerOptions": { "isolatedDeclarations": true },
 }
@@ -197,15 +197,15 @@ workspace pins 7.0.2.
 
 One file per package shape, the same way the tsconfigs split by environment.
 
-| File                     | Subpath                      | For                                     |
-| ------------------------ | ---------------------------- | --------------------------------------- |
-| `vite.library.config.ts` | `@batik/config/vite/library` | Publishable packages built by `vp pack` |
+| File                     | Subpath                                | For                                     |
+| ------------------------ | -------------------------------------- | --------------------------------------- |
+| `vite.library.config.ts` | `@batik-prototype/config/vite/library` | Publishable packages built by `vp pack` |
 
 Each file is a config object, not a factory — the same relationship `tsconfig.library.json` has to a
 package's tsconfig. Every publishable package's `vite.config.ts` is exactly this:
 
 ```ts
-export { default } from '@batik/config/vite/library';
+export { default } from '@batik-prototype/config/vite/library';
 ```
 
 It carries both halves of a package build: the `pack` policy that tsdown reads, and the
@@ -217,7 +217,7 @@ Merge a local config over it. `mergeConfig` deep merges and the **second argumen
 a package overrides just what it needs:
 
 ```ts
-import libraryConfig from '@batik/config/vite/library';
+import libraryConfig from '@batik-prototype/config/vite/library';
 import { defineConfig, mergeConfig } from 'vite-plus';
 
 export default mergeConfig(

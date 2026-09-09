@@ -1,9 +1,9 @@
-# `@batik/math`
+# `@batik-prototype/math`
 
 Math primitives for building design tokens and fluid scales.
 
 ```ts
-import { clamp, lerp, remap } from '@batik/math';
+import { clamp, lerp, remap } from '@batik-prototype/math';
 
 // A fluid font size: 16px at a 320px viewport, 24px at 1280px, clamped at both ends.
 remap(800, { min: 320, max: 1280 }, { min: 16, max: 24 }); // => 20
@@ -25,7 +25,7 @@ It doubles as the reference for how a publishable package in this repo is wired.
   instead, because pulling it in here would drag Vite+'s Node type references
   into this program and make `process` and `Buffer` resolve inside `src`.
 - **`vite.config.ts` is a one-line re-export** of
-  [`@batik/config/vite/library`](../config#readme). Both the `pack` policy
+  [`@batik-prototype/config/vite/library`](../config#readme). Both the `pack` policy
   and the `build`/`dev` tasks live there; a package overrides any of it by
   merging a local config over the shared one with `mergeConfig`.
 - **`imports`** maps `#/*` to `./src/*.js`. The `.js` is deliberate — see the

@@ -41,10 +41,10 @@ describe('produce', () => {
     const manifest: unknown = JSON.parse(read(await produce(), 'package.json'));
 
     expect(manifest).toMatchObject({
-      name: '@batik/color',
+      name: '@batik-prototype/color',
       version: '0.0.0',
       description: OPTIONS.description,
-      homepage: 'https://github.com/devsantara/batik/tree/main/packages/color#readme',
+      homepage: 'https://github.com/devsantara/batik-prototype/tree/main/packages/color#readme',
       keywords: ['color', 'design system'],
       repository: { directory: 'packages/color' },
     });
@@ -73,8 +73,8 @@ describe('produce', () => {
 
     expect(tsconfig).toEqual({
       extends: [
-        '@batik/config/typescript/tsconfig.browser.json',
-        '@batik/config/typescript/tsconfig.library.json',
+        '@batik-prototype/config/typescript/tsconfig.browser.json',
+        '@batik-prototype/config/typescript/tsconfig.library.json',
       ],
       include: ['src'],
     });
@@ -82,7 +82,7 @@ describe('produce', () => {
 
   it('re-exports the shared library build config', async () => {
     expect(read(await produce(), 'vite.config.ts')).toBe(
-      "export { default } from '@batik/config/vite/library';\n",
+      "export { default } from '@batik-prototype/config/vite/library';\n",
     );
   });
 
@@ -90,7 +90,7 @@ describe('produce', () => {
     const files = await produce();
 
     expect(read(files, 'src', 'index.ts')).toContain("from '#/placeholder'");
-    expect(read(files, 'src', 'placeholder.ts')).toContain("'@batik/color'");
+    expect(read(files, 'src', 'placeholder.ts')).toContain("'@batik-prototype/color'");
     expect(read(files, 'src', 'placeholder.test.ts')).toContain("from 'vite-plus/test'");
   });
 });

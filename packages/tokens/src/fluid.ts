@@ -1,4 +1,4 @@
-import { remap, type Range } from '@batik/math';
+import { remap, type Range } from '@batik-prototype/math';
 
 /** The viewport range every fluid token interpolates across, in pixels. */
 export const VIEWPORT: Range = { min: 320, max: 1280 };

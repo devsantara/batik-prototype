@@ -1,9 +1,9 @@
-# `@batik/create-package`
+# `@batik-prototype/create-package`
 
 The code generator behind `vp create package`. It scaffolds a new publishable
 package under `packages/` with this workspace's conventions already in place:
 the browser + library tsconfig pair, the one-line `vite.config.ts` re-export of
-[`@batik/config/vite/library`](../../packages/config#readme), the two hand-written
+[`@batik-prototype/config/vite/library`](../../packages/config#readme), the two hand-written
 `exports` maps, and a placeholder module with a colocated test so the package is
 green from the first commit.
 
@@ -20,7 +20,7 @@ vp create package -- --name color --description "Color primitives and contrast h
 ```
 
 `--name` is the unscoped, kebab-case name. It decides both the published name
-(`@batik/color`) and the directory (`packages/color`). `vp create` takes it from
+(`@batik-prototype/color`) and the directory (`packages/color`). `vp create` takes it from
 there: workspace registration, `pnpm install`, and `vp fmt`.
 
 Afterwards, write a changeset - CI fails a PR that changes a package without one.

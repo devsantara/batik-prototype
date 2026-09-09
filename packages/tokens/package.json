@@ -1,20 +1,20 @@
 {
-  "name": "@batik/tokens",
+  "name": "@batik-prototype/tokens",
   "version": "0.1.0",
-  "description": "Fluid type and space scales built on @batik/math",
+  "description": "Fluid type and space scales built on @batik-prototype/math",
   "keywords": [
     "design system",
     "design tokens"
   ],
-  "homepage": "https://github.com/devsantara/batik/tree/main/packages/tokens#readme",
+  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/packages/tokens#readme",
   "bugs": {
-    "url": "https://github.com/devsantara/batik/issues"
+    "url": "https://github.com/devsantara/batik-prototype/issues"
   },
   "license": "MIT",
   "author": "devsantara",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devsantara/batik.git",
+    "url": "git+https://github.com/devsantara/batik-prototype.git",
     "directory": "packages/tokens"
   },
   "files": [
@@ -42,9 +42,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@batik/math": "workspace:*"
+    "@batik-prototype/math": "workspace:*"
   },
   "devDependencies": {
-    "@batik/config": "workspace:*"
+    "@batik-prototype/config": "workspace:*"
   }
 }

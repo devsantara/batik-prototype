@@ -54,7 +54,7 @@ export default createTemplate({
 
     const directory = `${PACKAGES_DIRECTORY}/${options.name}`;
 
-    // The workspace root is `batik` and its packages are `@batik/*`, so the
+    // The workspace root is `batik-prototype` and its packages are `@batik-prototype/*`, so the
     // scope is the root package name rather than a second thing to keep in sync.
     const packageName = `@${manifest.name}/${options.name}`;
 
@@ -76,8 +76,8 @@ export default createTemplate({
         // which is what turns on `declaration` - second.
         'tsconfig.json': `{
   "extends": [
-    "@batik/config/typescript/tsconfig.browser.json",
-    "@batik/config/typescript/tsconfig.library.json"
+    "@batik-prototype/config/typescript/tsconfig.browser.json",
+    "@batik-prototype/config/typescript/tsconfig.library.json"
   ],
   "include": ["src"]
 }
@@ -85,7 +85,7 @@ export default createTemplate({
         // The shared config carries the whole `pack` policy and the build/dev
         // tasks. Override it by merging a local config over this one; see
         // packages/tokens for an example.
-        'vite.config.ts': "export { default } from '@batik/config/vite/library';\n",
+        'vite.config.ts': "export { default } from '@batik-prototype/config/vite/library';\n",
         src: {
           'index.ts': `export { PACKAGE_NAME } from '#/placeholder';\n`,
           'placeholder.ts': placeholder(packageName),
@@ -95,7 +95,7 @@ export default createTemplate({
       // `vp create` only wires a generated package into the workspace when it
       // was handed a `--directory` itself, which it never is here - bin/index.ts
       // derives one instead. Install from the new package: pnpm picks it up
-      // through the `packages/*` glob and links @batik/config.
+      // through the `packages/*` glob and links @batik-prototype/config.
       scripts: ['vp install'],
       suggestions: [
         `Write the first changeset for ${packageName}: pnpm changeset`,
@@ -153,7 +153,7 @@ function packageManifest(context: {
       },
       access: 'public',
     },
-    devDependencies: { '@batik/config': 'workspace:*' },
+    devDependencies: { '@batik-prototype/config': 'workspace:*' },
   };
 }
 
@@ -201,7 +201,7 @@ vp run dev            # vp pack --watch
 vp test run           # from the repo root, runs this package's tests too
 \`\`\`
 
-[\`@batik/math\`](../math#readme) documents why a package in this repo is wired
+[\`@batik-prototype/math\`](../math#readme) documents why a package in this repo is wired
 the way it is - the tsconfig split, the two \`exports\` maps, and the \`#/\` alias.
 `;
 }

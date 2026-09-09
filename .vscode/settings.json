@@ -11,8 +11,8 @@
   "oxc.enable": true,
 
   // typescript: use the workspace version (7.x) instead of the one VS Code bundles
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
 
   // editor
   "editor.defaultFormatter": "oxc.oxc-vscode",

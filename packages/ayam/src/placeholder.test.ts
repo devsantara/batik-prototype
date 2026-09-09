@@ -4,6 +4,6 @@ import { PACKAGE_NAME } from '#/placeholder';
 
 describe('PACKAGE_NAME', () => {
   it('is the published package name', () => {
-    expect(PACKAGE_NAME).toBe('@batik/ayam');
+    expect(PACKAGE_NAME).toBe('@batik-prototype/ayam');
   });
 });

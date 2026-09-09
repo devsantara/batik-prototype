@@ -1,6 +1,6 @@
 ---
-'@batik/math': patch
-'@batik/tokens': patch
+'@batik-prototype/math': patch
+'@batik-prototype/tokens': patch
 ---
 
 Ship readable, unminified builds. Minifying a library mangles identifiers in

@@ -1,20 +1,20 @@
 {
-  "name": "@batik/math",
+  "name": "@batik-prototype/math",
   "version": "0.1.0",
   "description": "Math primitives for building design tokens and fluid scales",
   "keywords": [
     "design system",
     "math"
   ],
-  "homepage": "https://github.com/devsantara/batik/tree/main/packages/math#readme",
+  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/packages/math#readme",
   "bugs": {
-    "url": "https://github.com/devsantara/batik/issues"
+    "url": "https://github.com/devsantara/batik-prototype/issues"
   },
   "license": "MIT",
   "author": "devsantara",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devsantara/batik.git",
+    "url": "git+https://github.com/devsantara/batik-prototype.git",
     "directory": "packages/math"
   },
   "files": [
@@ -42,6 +42,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@batik/config": "workspace:*"
+    "@batik-prototype/config": "workspace:*"
   }
 }

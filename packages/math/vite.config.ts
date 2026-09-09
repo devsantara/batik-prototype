@@ -1,1 +1,1 @@
-export { default } from '@batik/config/vite/library';
+export { default } from '@batik-prototype/config/vite/library';

@@ -1,20 +1,20 @@
 {
-  "name": "@batik/ayam",
+  "name": "@batik-prototype/ayam",
   "version": "0.0.0",
   "description": "hanya seekor ayam",
   "keywords": [
     "ayam",
     "design system"
   ],
-  "homepage": "https://github.com/devsantara/batik/tree/main/packages/ayam#readme",
+  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/packages/ayam#readme",
   "bugs": {
-    "url": "https://github.com/devsantara/batik/issues"
+    "url": "https://github.com/devsantara/batik-prototype/issues"
   },
   "license": "MIT",
   "author": "devsantara",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devsantara/batik.git",
+    "url": "git+https://github.com/devsantara/batik-prototype.git",
     "directory": "packages/ayam"
   },
   "files": [
@@ -41,10 +41,8 @@
     },
     "access": "public"
   },
-  "dependencies": {
-    "@batik/tokens": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@batik/config": "workspace:*"
+    "@batik-prototype/config": "workspace:*"
   }
 }

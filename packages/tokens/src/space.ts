@@ -1,4 +1,4 @@
-import { clamp } from '@batik/math';
+import { clamp } from '@batik-prototype/math';
 
 /** The spacing ramp, in pixels. Index is the step. */
 const STEPS = [0, 2, 4, 8, 12, 16, 24, 32, 48, 64] as const;

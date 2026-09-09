@@ -1,7 +1,7 @@
 {
   // Node tooling, never shipped to a browser - so this is the one place in the
   // workspace outside the root config that gets Node globals and types.
-  "extends": "@batik/config/typescript/tsconfig.node.json",
+  "extends": "@batik-prototype/config/typescript/tsconfig.node.json",
 
   "compilerOptions": {
     // This package is never built: `vp create` runs bin/index.ts through Node's

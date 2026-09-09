@@ -1,4 +1,4 @@
-import libraryConfig from '@batik/config/vite/library';
+import libraryConfig from '@batik-prototype/config/vite/library';
 import { defineConfig, mergeConfig } from 'vite-plus';
 
 export default mergeConfig(

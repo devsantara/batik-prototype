@@ -1,5 +1,5 @@
 {
-  "name": "batik",
+  "name": "batik-prototype",
   "version": "0.0.0",
   "private": true,
   "description": "Token-first design system for StyleX",
@@ -7,15 +7,15 @@
     "design system",
     "stylex"
   ],
-  "homepage": "https://github.com/devsantara/batik#readme",
+  "homepage": "https://github.com/devsantara/batik-prototype#readme",
   "bugs": {
-    "url": "https://github.com/devsantara/batik/issues"
+    "url": "https://github.com/devsantara/batik-prototype/issues"
   },
   "license": "MIT",
   "author": "devsantara",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devsantara/batik.git"
+    "url": "git+https://github.com/devsantara/batik-prototype.git"
   },
   "type": "module",
   "scripts": {
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/core": "catalog:",
-    "@batik/config": "workspace:*",
+    "@batik-prototype/config": "workspace:*",
     "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",
     "@types/node": "catalog:",

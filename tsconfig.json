@@ -13,7 +13,7 @@
   //
   // Packages each own their own tsconfig.json for `src`; there are no project
   // references, since tsdown builds the packages and tsgolint checks them.
-  "extends": "@batik/config/typescript/tsconfig.node.json",
+  "extends": "@batik-prototype/config/typescript/tsconfig.node.json",
 
   "include": ["vite.config.ts", "packages/*/vite.config.ts"]
 }

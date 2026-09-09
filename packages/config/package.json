@@ -1,5 +1,5 @@
 {
-  "name": "@batik/config",
+  "name": "@batik-prototype/config",
   "version": "0.0.0",
   "private": true,
   "description": "Shared TypeScript and Vite+ configuration for the Batik design system",
@@ -9,15 +9,15 @@
     "typescript",
     "vite"
   ],
-  "homepage": "https://github.com/devsantara/batik/tree/main/packages/config#readme",
+  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/packages/config#readme",
   "bugs": {
-    "url": "https://github.com/devsantara/batik/issues"
+    "url": "https://github.com/devsantara/batik-prototype/issues"
   },
   "license": "MIT",
   "author": "devsantara",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devsantara/batik.git",
+    "url": "git+https://github.com/devsantara/batik-prototype.git",
     "directory": "packages/config"
   },
   "files": [

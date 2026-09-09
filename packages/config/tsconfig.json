@@ -3,6 +3,16 @@
   // that owns the presets, so it has no need to resolve itself.
   "extends": "./src/typescript/tsconfig.node.json",
 
+  "compilerOptions": {
+    // The Vite+ configs are loaded as raw TypeScript, by a loader that resolves
+    // specifiers literally - it does not apply the `.js` -> `.ts` mapping a
+    // bundler would. A relative import between two of them therefore has to
+    // name the `.ts` file it actually means, and this is the flag that lets
+    // TypeScript agree. Safe here because `noEmit` is on: nothing downstream
+    // ever sees the specifier.
+    "allowImportingTsExtensions": true
+  },
+
   // The tsconfigs are data, not a program. The Vite+ configs are Node source,
   // and this is where they are type-checked - the root tsconfig's
   // `packages/*/vite.config.ts` glob does not reach them.

@@ -38,7 +38,7 @@ The subpaths keep the filename but hide `src/`, so moving a file never moves the
 consumers write. That does mean `extends` resolves **only** through `exports` — the key no
 longer matches its own path, so a resolver that falls back to a literal directory lookup
 finds nothing. Verified against both checkers this repo runs: tsgolint (`vp check`) and
-`tsc` 7.0.2 resolve it, and `tsc --showConfig` on `@batik-prototype/math` confirms the whole
+`tsc` 7.0.2 resolve it, and `tsc --showConfig` on `@batik-prototype/theme-ocean` confirms the whole
 `base` → `browser` → `library` chain is applied rather than silently skipped. A tool
 pinned to classic `node10` resolution would not find these; nothing here is.
 
@@ -48,10 +48,10 @@ later entries win).
 
 ### Recipes
 
-Tokens, theme, and utility packages — publishable, no JSX:
+Token, theme, and utility packages — publishable, no JSX:
 
 ```jsonc
-// packages/tokens/tsconfig.json
+// themes/ocean/tsconfig.json
 {
   "extends": [
     "@batik-prototype/config/typescript/tsconfig.browser.json",
@@ -64,7 +64,7 @@ Tokens, theme, and utility packages — publishable, no JSX:
 Component and hook packages — publishable, JSX:
 
 ```jsonc
-// packages/components/tsconfig.json
+// packages/core/tsconfig.json
 {
   "extends": [
     "@batik-prototype/config/typescript/tsconfig.react.json",
@@ -197,9 +197,10 @@ workspace pins 7.0.2.
 
 One file per package shape, the same way the tsconfigs split by environment.
 
-| File                     | Subpath                                | For                                     |
-| ------------------------ | -------------------------------------- | --------------------------------------- |
-| `vite.library.config.ts` | `@batik-prototype/config/vite/library` | Publishable packages built by `vp pack` |
+| File                            | Subpath                                       | For                                     |
+| ------------------------------- | --------------------------------------------- | --------------------------------------- |
+| `vite.library.config.ts`        | `@batik-prototype/config/vite/library`        | Publishable packages built by `vp pack` |
+| `vite.stylex-library.config.ts` | `@batik-prototype/config/vite/stylex-library` | Publishable packages that author StyleX |
 
 Each file is a config object, not a factory — the same relationship `tsconfig.library.json` has to a
 package's tsconfig. Every publishable package's `vite.config.ts` is exactly this:
@@ -210,6 +211,23 @@ export { default } from '@batik-prototype/config/vite/library';
 
 It carries both halves of a package build: the `pack` policy that tsdown reads, and the
 `build` / `dev` tasks that `vp run` reads.
+
+### The StyleX variant
+
+`vite.stylex-library.config.ts` is `vite.library.config.ts` with `minify` turned off, and it
+is the config every runtime Batik package uses — `@batik-prototype/core` and all three
+themes.
+
+The reason is that a StyleX package does not ship compiled CSS. It ships its
+`stylex.create()`, `defineVars()` and `createTheme()` calls intact, and the _consuming_
+app's StyleX plugin reads them out of `dist`, hashes them, and emits one stylesheet for the
+whole dependency graph. That is what lets a theme installed from npm override variables a
+component package declared.
+
+Minification is not known to break that — object keys and the StyleX import binding both
+survive it — but it turns the one input a downstream build depends on into something no
+human can check when a variable fails to resolve. Shipping it readable costs nothing: the
+app minifies afterwards anyway, with whole-program context a single package cannot have.
 
 ### Overriding
 
@@ -292,5 +310,10 @@ caching entirely, since a watcher never exits 0.
 
 These files are loaded by Vite+'s config loader as raw source, which resolves specifiers
 literally — it does not apply TypeScript's `.js` → `.ts` mapping that the bundler does. The
-repo-wide `#/*` alias therefore does not resolve here, so each config file stays
-self-contained rather than importing shared helpers across modules.
+repo-wide `#/*` alias therefore does not resolve here.
+
+Relative imports between them do work, as long as they name the `.ts` file they actually
+mean — which is how `vite.stylex-library.config.ts` builds on `vite.library.config.ts`
+instead of copying it. TypeScript rejects a `.ts` specifier by default, so this package's
+own `tsconfig.json` turns on `allowImportingTsExtensions`. That is safe because `noEmit` is
+on everywhere: nothing downstream ever sees the specifier.

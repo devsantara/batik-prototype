@@ -1,0 +1,56 @@
+{
+  "name": "@batik-prototype/theme-sunset",
+  "version": "0.0.0",
+  "description": "A warm amber-and-orange Batik theme with crisp, squared-off shapes, in light and dark",
+  "keywords": [
+    "design system",
+    "design tokens",
+    "stylex",
+    "sunset",
+    "theme"
+  ],
+  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/themes/sunset#readme",
+  "bugs": {
+    "url": "https://github.com/devsantara/batik-prototype/issues"
+  },
+  "license": "MIT",
+  "author": "devsantara",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devsantara/batik-prototype.git",
+    "directory": "themes/sunset"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.ts",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "imports": {
+    "#/*": "./src/*.js"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./package.json": "./package.json"
+    },
+    "access": "public"
+  },
+  "devDependencies": {
+    "@batik-prototype/config": "workspace:*",
+    "@batik-prototype/core": "workspace:*",
+    "@stylexjs/stylex": "catalog:"
+  },
+  "peerDependencies": {
+    "@batik-prototype/core": "workspace:^",
+    "@stylexjs/stylex": "^0.19.0"
+  }
+}

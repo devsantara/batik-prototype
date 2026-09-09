@@ -1,0 +1,1 @@
+export { classic } from '#/classic';

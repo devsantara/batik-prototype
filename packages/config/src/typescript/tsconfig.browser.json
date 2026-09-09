@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Batik Browser",
+  "docs": "Browser environment without JSX. Use for token, theme, and utility packages.",
+
+  "extends": "./tsconfig.base.json",
+
+  "compilerOptions": {
+    // ES2022 is the floor the design system ships against: fully supported by
+    // every evergreen browser and by Node 18+. Raising it here raises the
+    // syntax and API surface every consumer must be able to run.
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "DOM.AsyncIterable"]
+  }
+}

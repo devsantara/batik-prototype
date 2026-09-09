@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Batik Base",
+  "docs": "Foundation shared by every package and app. Never extend this directly - pick an environment config (browser/node/react) instead.",
+
+  "compilerOptions": {
+    // --- Language and environment ---------------------------------------
+    // `lib` and `types` are deliberately left to the environment configs so
+    // that browser code cannot silently reach for Node globals, and vice versa.
+    "target": "ES2022",
+    "moduleDetection": "force",
+
+    // --- Modules ---------------------------------------------------------
+    // Everything here is processed by a bundler (Vite for apps, tsdown for
+    // packages), so module resolution follows bundler rules. `baseUrl` and
+    // `paths` are intentionally absent: tsgolint (the type checker behind
+    // `vp check`) does not support `baseUrl`. Use package.json `imports`
+    // (`#/...`) for internal aliases instead.
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "erasableSyntaxOnly": true,
+    "noUncheckedSideEffectImports": true,
+
+    // --- Emit -------------------------------------------------------------
+    // TypeScript only type-checks. tsdown (`vp pack`) and Vite (`vp build`)
+    // own every artifact that ships.
+    "noEmit": true,
+    "incremental": true,
+    "tsBuildInfoFile": "${configDir}/node_modules/.cache/tsconfig.tsbuildinfo",
+
+    // --- Type checking ----------------------------------------------------
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+
+    // --- Interop and completeness -----------------------------------------
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": []
+  },
+
+  "exclude": [
+    "${configDir}/node_modules",
+    "${configDir}/dist",
+    "${configDir}/build",
+    "${configDir}/coverage",
+    "${configDir}/.next",
+    "${configDir}/.output"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "@batik/config",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared TypeScript and Vite+ configuration for the Batik design system",
+  "keywords": [
+    "design system",
+    "tsconfig",
+    "typescript",
+    "vite"
+  ],
+  "homepage": "https://github.com/devsantara/batik/tree/main/packages/config#readme",
+  "bugs": {
+    "url": "https://github.com/devsantara/batik/issues"
+  },
+  "license": "MIT",
+  "author": "devsantara",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devsantara/batik.git",
+    "directory": "packages/config"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "exports": {
+    "./typescript/tsconfig.base.json": "./src/typescript/tsconfig.base.json",
+    "./typescript/tsconfig.browser.json": "./src/typescript/tsconfig.browser.json",
+    "./typescript/tsconfig.library.json": "./src/typescript/tsconfig.library.json",
+    "./typescript/tsconfig.node.json": "./src/typescript/tsconfig.node.json",
+    "./typescript/tsconfig.react.json": "./src/typescript/tsconfig.react.json",
+    "./vite/library": "./src/vite/vite.library.config.ts",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.8",
+    "vite-plus": "*"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "batik",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Token-first design system for StyleX",
+  "keywords": [
+    "design system",
+    "stylex"
+  ],
+  "homepage": "https://github.com/devsantara/batik#readme",
+  "bugs": {
+    "url": "https://github.com/devsantara/batik/issues"
+  },
+  "license": "MIT",
+  "author": "devsantara",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devsantara/batik.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "vp run -r build",
+    "changeset": "changeset",
+    "check": "vp check",
+    "check:fix": "vp check --fix",
+    "dev": "vp run -r dev",
+    "format": "vp fmt",
+    "format:check": "vp fmt --check",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
+    "prepare": "vp config",
+    "release": "vp run -r build && pnpm publish -r --access public --no-git-checks",
+    "start": "vp run -r start",
+    "test": "vp test",
+    "test:coverage": "vp test run --coverage",
+    "test:watch": "vp test watch",
+    "version": "changeset version && pnpm install --lockfile-only"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/core": "catalog:",
+    "@batik/config": "workspace:*",
+    "@changesets/changelog-github": "catalog:",
+    "@changesets/cli": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "publint": "catalog:",
+    "typescript": "catalog:",
+    "unplugin-unused": "catalog:",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.3.4",
+      "onFail": "download"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "24.21.0",
+      "onFail": "download"
+    }
+  }
+}

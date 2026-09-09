@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+
+  // The workspace root is a real TypeScript project, not a `files: []` solution
+  // stub, because it owns every Node-side file that lives outside a package's
+  // shipped source: the root `vite.config.ts` and each package's build config.
+  //
+  // Those build configs deliberately live here rather than in their own
+  // package's `include`. A package's tsconfig is a browser program with
+  // `types: []`, and pulling `vite.config.ts` into it drags Vite+'s Node type
+  // references into the same program - which makes `process`, `Buffer` and
+  // `__dirname` resolve inside `src/` and silently defeats the isolation.
+  //
+  // Packages each own their own tsconfig.json for `src`; there are no project
+  // references, since tsdown builds the packages and tsgolint checks them.
+  "extends": "@batik/config/typescript/tsconfig.node.json",
+
+  "include": ["vite.config.ts", "packages/*/vite.config.ts"]
+}

@@ -1,0 +1,10 @@
+{
+  // Extends by relative path rather than by package name: this is the package
+  // that owns the presets, so it has no need to resolve itself.
+  "extends": "./src/typescript/tsconfig.node.json",
+
+  // The tsconfigs are data, not a program. The Vite+ configs are Node source,
+  // and this is where they are type-checked - the root tsconfig's
+  // `packages/*/vite.config.ts` glob does not reach them.
+  "include": ["src/vite/*.config.ts"]
+}

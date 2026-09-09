@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Batik React",
+  "docs": "Browser environment with the React 17+ automatic JSX runtime. Use for component and hook packages, and for docs/example apps.",
+
+  "extends": "./tsconfig.browser.json",
+
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  }
+}

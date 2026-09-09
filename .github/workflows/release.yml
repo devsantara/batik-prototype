@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Version or publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the version PR / release tags
+      pull-requests: write # open and update the version PR
+      id-token: write # mint the OIDC token npm provenance is signed with
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # changesets needs history to work out what changed
+
+      - uses: voidzero-dev/setup-vp@v1.19.0
+        with:
+          node-version: '24'
+          cache: true
+
+      - run: vp install --frozen-lockfile
+
+      # When changesets are pending, this opens/updates the "Version Packages"
+      # PR. When that PR merges and none are left, `publish` runs instead.
+      #
+      # `publish` is pnpm, not `changeset publish`: publishConfig.exports and
+      # the workspace:* rewrite are pnpm features. npm ignores both and would
+      # publish `exports` still pointing at ./src/index.ts.
+      - uses: changesets/action@v1
+        with:
+          version: pnpm run version
+          publish: pnpm run release
+          title: 'chore(release): version packages'
+          commit: 'chore(release): version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

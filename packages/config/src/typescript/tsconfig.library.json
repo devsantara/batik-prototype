@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Batik Library",
+  "docs": "Overlay for packages that publish types. Not usable on its own - list it AFTER an environment config in an `extends` array.",
+
+  "compilerOptions": {
+    // `noEmit` (inherited) still holds: tsdown reads these two flags to decide
+    // what to generate, it does not ask tsc to emit.
+    "declaration": true,
+    "declarationMap": true
+  }
+}

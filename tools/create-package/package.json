@@ -1,0 +1,36 @@
+{
+  "name": "@batik/create-package",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Scaffolds a publishable Batik package with the workspace conventions already wired",
+  "keywords": [
+    "design system",
+    "generator",
+    "vite-plus-generator"
+  ],
+  "homepage": "https://github.com/devsantara/batik/tree/main/tools/create-package#readme",
+  "bugs": {
+    "url": "https://github.com/devsantara/batik/issues"
+  },
+  "license": "MIT",
+  "author": "devsantara",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devsantara/batik.git",
+    "directory": "tools/create-package"
+  },
+  "bin": "./bin/index.ts",
+  "type": "module",
+  "dependencies": {
+    "bingo": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@batik/config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

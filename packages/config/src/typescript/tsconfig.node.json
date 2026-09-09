@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Batik Node",
+  "docs": "Node environment. Use for the workspace root, build scripts, and tooling that never ships to a browser. Requires @types/node.",
+
+  "extends": "./tsconfig.base.json",
+
+  "compilerOptions": {
+    // Pinned to the runtime in the root package.json `devEngines` (Node 24),
+    // which supports all of ES2024.
+    "target": "ES2024",
+    "lib": ["ES2024"],
+    "types": ["node"]
+  }
+}

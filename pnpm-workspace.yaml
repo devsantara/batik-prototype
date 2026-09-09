@@ -1,0 +1,35 @@
+packages:
+  - apps/*
+  - packages/*
+  - tools/*
+savePrefix: ''
+catalogMode: prefer
+catalog:
+  '@arethetypeswrong/core': 0.18.5
+  '@changesets/changelog-github': 1.0.1
+  '@changesets/cli': 3.0.2
+  '@types/node': 24.13.3
+  '@vitest/coverage-v8': 4.1.11
+  bingo: 0.9.3
+  publint: 0.3.24
+  typescript: 7.0.2
+  unplugin-unused: 0.6.0
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.1
+  vite-plus: 0.3.1
+  vitest: 4.1.11
+  zod: 3.25.76
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - '@voidzero-dev/*'
+  - vite-plus
+overrides:
+  vite@*: 'catalog:'
+  vitest@*: 'catalog:'
+
+# `vite` is aliased to @voidzero-dev/vite-plus-core, whose version line (0.3.x)
+# will never satisfy vitest's `^6 || ^7 || ^8` peer range. The alias is the whole
+# point of Vite+, so silence that one expected warning - otherwise every install
+# prints it and real peer conflicts get lost in the noise.
+peerDependencyRules:
+  allowAny:
+    - vite

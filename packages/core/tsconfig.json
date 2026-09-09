@@ -1,0 +1,7 @@
+{
+  "extends": [
+    "@batik-prototype/config/typescript/tsconfig.react.json",
+    "@batik-prototype/config/typescript/tsconfig.library.json"
+  ],
+  "include": ["src"]
+}

@@ -1,0 +1,82 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  # So a deploy can be re-run without an empty commit - useful after changing a
+  # Pages setting, which does not itself trigger a build.
+  workflow_dispatch:
+
+# A Pages site is one shared resource, so deployments queue rather than cancel.
+# `cancel-in-progress: true` - correct for CI, where a superseded run is waste -
+# would abort a deploy mid-upload and can leave the site serving a half-written
+# artifact.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build the example app
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write # configure-pages turns Pages on if it is off
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: voidzero-dev/setup-vp@v1.19.0
+        with:
+          node-version: '24'
+          cache: true
+
+      - run: vp install --frozen-lockfile
+
+      # `enablement: true` switches the repo to the "GitHub Actions" Pages
+      # source on the first run, so this workflow is the only setup step.
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+
+      # Built directly rather than through `vp run @batik-prototype/example#build`
+      # on purpose. A project site is served from a subdirectory, so the bundle
+      # needs a matching `base` - and a task result is cached on its tracked
+      # inputs, which a CLI flag is not. Going through the task risks replaying a
+      # dist built for `/`, whose asset URLs would all 404.
+      #
+      # The base comes from configure-pages rather than being hard-coded, so a
+      # rename or a custom domain does not need an edit here. `%/` trims the
+      # trailing slash a user or org site would have, before adding exactly one:
+      # Vite wants a base that both starts and ends with `/`.
+      - name: Build
+        working-directory: apps/example
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: vp build --base="${BASE_PATH%/}/"
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: apps/example/dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # Nothing to check out: this job only publishes the artifact the build job
+      # uploaded, which is why it is a separate job with no repository access.
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

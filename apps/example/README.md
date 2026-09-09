@@ -8,6 +8,9 @@ between them at runtime.
 vp run @batik-prototype/example#dev     # or `pnpm dev` from the repo root
 ```
 
+Deployed to <https://devsantara.github.io/batik-prototype/> on every push to `main`, by
+[`deploy.yml`](../../.github/workflows/deploy.yml).
+
 ## What it demonstrates
 
 - **Every component**, in every variant, size and state — [`src/showcase.tsx`](./src/showcase.tsx).

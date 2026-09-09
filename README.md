@@ -16,6 +16,9 @@ A themeable design system built on [StyleX](https://stylexjs.com). One set of co
 one token contract, and as many installable themes as you care to write — each a separate
 package that overrides the tokens and nothing else.
 
+**[Live demo](https://devsantara.github.io/batik-prototype/)** — every component, in all
+three themes, in light and dark.
+
 ```bash
 pnpm add @batik-prototype/core @batik-prototype/theme-ocean @stylexjs/stylex
 ```
@@ -80,3 +83,47 @@ Every change to a published package needs a changeset — CI fails a PR without 
 ```bash
 pnpm changeset
 ```
+
+## Automation
+
+Three workflows, all triggered by a push to `main`. Nothing is versioned, published or
+deployed from anyone's machine.
+
+| Workflow                                         | Does                                                                 |
+| ------------------------------------------------ | -------------------------------------------------------------------- |
+| [`ci.yml`](./.github/workflows/ci.yml)           | `vp check`, `vp test run`, `vp run -r build`, and the changeset gate |
+| [`release.yml`](./.github/workflows/release.yml) | Opens the version PR, then publishes to npm once it merges           |
+| [`deploy.yml`](./.github/workflows/deploy.yml)   | Builds the example app and deploys it to GitHub Pages                |
+
+### Releasing
+
+The changesets action drives it, in two passes over the same workflow:
+
+1. A push to `main` with changesets pending opens (or updates) a
+   **`chore(release): version packages`** PR. That PR is where `changeset version` runs —
+   it bumps the versions, writes each `CHANGELOG.md` and deletes the changesets it
+   consumed.
+2. Merging that PR leaves no changesets, so the same workflow runs `pnpm run release`
+   instead: `vp run -r build` — which is also what runs publint, attw and the
+   unused-dependency gate — then `pnpm publish -r`.
+
+Publishing is pnpm rather than `changeset publish` because `publishConfig.exports` and the
+`workspace:^` rewrite are pnpm features; npm ignores both and would publish an `exports`
+map still pointing at `./src/index.ts`.
+
+Two secrets make it work. `NPM_TOKEN` needs read and write on the `@batik-prototype` scope
+and must not be 2FA-gated, since the publish is non-interactive. `GITHUB_TOKEN` is
+supplied automatically. Provenance is signed with the workflow's OIDC token, which is why
+the job asks for `id-token: write`.
+
+### Deploying
+
+Every push to `main` rebuilds the example app and publishes it to Pages. There is nothing
+to switch on first: `configure-pages` enables Pages and points it at Actions on the first
+run.
+
+The build reads its base path from that same step rather than hard-coding one, so a rename
+or a custom domain needs no edit. It also calls `vp build` directly instead of going
+through the `build` task — a task result is cached on its tracked inputs, and a `--base`
+flag is not one, so the task could replay a bundle built for `/` whose asset URLs would
+all 404 under a project site.

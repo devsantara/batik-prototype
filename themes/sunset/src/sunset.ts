@@ -4,78 +4,89 @@ import { font } from '@batik-prototype/core/tokens/font.stylex';
 import { radius, shadow } from '@batik-prototype/core/tokens/shape.stylex';
 import * as stylex from '@stylexjs/stylex';
 
+// Warm greys rather than orange. The page is off-white with a trace of amber in
+// it - enough to feel warm next to Ocean's slate, not enough to read as a tint.
+// The accent is the one saturated colour, and it is pulled back from orange
+// towards terracotta so it behaves like ink instead of a highlighter.
 const lightColor = stylex.createTheme(color, {
-  background: '#fff8f2',
+  background: '#fcfaf8',
   surface: '#ffffff',
-  surfaceHover: '#fff0e4',
+  surfaceHover: '#f6f2ee',
 
-  foreground: '#431407',
-  muted: '#92613f',
+  foreground: '#1c1614',
+  muted: '#7d716a',
 
-  border: '#f7ddc8',
-  borderStrong: '#eebf9c',
-  ring: '#f97316',
+  border: '#ece5df',
+  borderStrong: '#dbd1c8',
+  ring: '#b4530f',
 
-  accent: '#ea580c',
-  accentHover: '#c2410c',
-  accentActive: '#9a3412',
+  accent: '#b4530f',
+  accentHover: '#93430c',
+  accentActive: '#7a3809',
   onAccent: '#ffffff',
 
   danger: '#be123c',
 
-  neutralSurface: '#fdece0',
-  onNeutralSurface: '#7c3a12',
-  accentSurface: '#ffedd5',
-  onAccentSurface: '#9a3412',
-  successSurface: '#d9f2e0',
-  onSuccessSurface: '#14532d',
-  warningSurface: '#fef0c7',
-  onWarningSurface: '#854d0e',
-  dangerSurface: '#ffe4e6',
+  // Washes, not fills: a row of badges should still read as text on the page
+  // rather than as a row of coloured chips.
+  neutralSurface: '#f4f0ec',
+  onNeutralSurface: '#4a423d',
+  accentSurface: '#f7ede4',
+  onAccentSurface: '#93430c',
+  successSurface: '#ecf2ea',
+  onSuccessSurface: '#3a5a2c',
+  warningSurface: '#f8f0dd',
+  onWarningSurface: '#7c4d08',
+  dangerSurface: '#f9eaeb',
   onDangerSurface: '#9f1239',
 });
 
+// Dark keeps the same restraint: a flat warm-charcoal page, one step of lift for
+// a surface, and an accent bright enough to be legible without glowing.
 const darkColor = stylex.createTheme(color, {
-  background: '#1b0f08',
-  surface: '#2a1710',
-  surfaceHover: '#3a2016',
+  background: '#12100e',
+  surface: '#1a1715',
+  surfaceHover: '#231f1c',
 
-  foreground: '#ffeadb',
-  muted: '#c69a7a',
+  foreground: '#ece7e3',
+  muted: '#9c918a',
 
-  border: '#3a2016',
-  borderStrong: '#5a3020',
-  ring: '#fb923c',
+  border: '#272220',
+  borderStrong: '#3a3330',
+  ring: '#e8a26a',
 
-  accent: '#fb923c',
-  accentHover: '#fdba74',
-  accentActive: '#fed7aa',
-  onAccent: '#1b0f08',
+  accent: '#e8a26a',
+  accentHover: '#f2bd90',
+  accentActive: '#f8d5b4',
+  onAccent: '#1a1006',
 
   danger: '#fb7185',
 
-  neutralSurface: '#3a2016',
-  onNeutralSurface: '#f5d6bd',
-  accentSurface: '#7c2d12',
-  onAccentSurface: '#fed7aa',
-  successSurface: '#14532d',
-  onSuccessSurface: '#bbf7d0',
-  warningSurface: '#713f12',
+  neutralSurface: '#231f1c',
+  onNeutralSurface: '#d3ccc6',
+  accentSurface: '#372415',
+  onAccentSurface: '#f2bd90',
+  successSurface: '#1e2b1a',
+  onSuccessSurface: '#bcd9b0',
+  warningSurface: '#332a10',
   onWarningSurface: '#fde68a',
-  dangerSurface: '#881337',
+  dangerSurface: '#341518',
   onDangerSurface: '#fecdd3',
 });
 
+// Elevation is close to absent. Borders already separate a sheet from the page,
+// so a shadow only has to say "this one floats" - and only the largest one, for
+// things that genuinely overlay the page, is allowed to be noticed.
 const lightShadow = stylex.createTheme(shadow, {
-  sm: '0 1px 2px rgba(67, 20, 7, 0.08)',
-  md: '0 3px 10px rgba(67, 20, 7, 0.1)',
-  lg: '0 14px 36px rgba(67, 20, 7, 0.16)',
+  sm: '0 1px 1px rgba(28, 22, 20, 0.03)',
+  md: '0 1px 2px rgba(28, 22, 20, 0.04), 0 4px 10px -6px rgba(28, 22, 20, 0.06)',
+  lg: '0 1px 2px rgba(28, 22, 20, 0.04), 0 12px 28px -14px rgba(28, 22, 20, 0.12)',
 });
 
 const darkShadow = stylex.createTheme(shadow, {
-  sm: '0 1px 2px rgba(0, 0, 0, 0.5)',
-  md: '0 3px 10px rgba(0, 0, 0, 0.55)',
-  lg: '0 14px 36px rgba(0, 0, 0, 0.6)',
+  sm: '0 1px 1px rgba(0, 0, 0, 0.3)',
+  md: '0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 10px -6px rgba(0, 0, 0, 0.45)',
+  lg: '0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -14px rgba(0, 0, 0, 0.6)',
 });
 
 // The mirror image of Ocean: near-square corners rather than pill-soft ones.
@@ -89,12 +100,14 @@ const sharpShape = stylex.createTheme(radius, {
 });
 
 // Proof that a theme's reach is not limited to colour. Nothing here needs a web
-// font: the stack resolves to a serif that is already on the machine.
+// font: the stack resolves to a serif that is already on the machine. Tracking
+// sits at zero - letterspaced small caps are decoration, and there is none here.
 const serifType = stylex.createTheme(font, {
   family: 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
+  trackingWide: '0em',
 });
 
-/** Warm amber and orange, squared off, set in a serif. Light and dark. */
+/** Warm greys with one terracotta accent, squared off, set in a serif. */
 export const sunset = defineTheme({
   name: 'sunset',
   base: [sharpShape, serifType],

@@ -1,6 +1,6 @@
 # `@batik-prototype/theme-sunset`
 
-Warm amber and orange, squared off, set in a serif. Light and dark.
+Warm greys with one terracotta accent, squared off, set in a serif. Light and dark.
 
 ```bash
 pnpm add @batik-prototype/theme-sunset
@@ -33,12 +33,19 @@ image on two axes at once:
 
 Both live in `base`, because neither depends on the colour scheme.
 
+The colour is as restrained as Ocean's. The page is an off-white with a trace of amber in
+it — enough to feel warm next to Ocean's slate, not enough to read as a tint — and the
+terracotta accent is the only saturated colour in the palette. Tonal surfaces are washes
+rather than fills, so a row of badges still reads as text on the page. Elevation is close
+to absent: borders already separate a sheet from the page, and only the largest shadow, for
+things that genuinely overlay it, is allowed to be noticed.
+
 ## Palette
 
 | Role       | Light     | Dark      |
 | ---------- | --------- | --------- |
-| Background | `#fff8f2` | `#1b0f08` |
-| Surface    | `#ffffff` | `#2a1710` |
-| Foreground | `#431407` | `#ffeadb` |
-| Accent     | `#ea580c` | `#fb923c` |
-| Ring       | `#f97316` | `#fb923c` |
+| Background | `#fcfaf8` | `#12100e` |
+| Surface    | `#ffffff` | `#1a1715` |
+| Foreground | `#1c1614` | `#ece7e3` |
+| Accent     | `#b4530f` | `#e8a26a` |
+| Ring       | `#b4530f` | `#e8a26a` |

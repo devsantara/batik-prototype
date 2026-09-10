@@ -113,7 +113,7 @@ against a white page is invisible against a near-black one, so it belongs in `li
 vp create theme -- --name violet --description "Deep violet with a soft dusk scheme"
 ```
 
-That scaffolds `themes/violet` with the manifest, tsconfig, build config and licence
+That scaffolds `packages/themes/violet` with the manifest, tsconfig, build config and licence
 already right, and runs `vp install`. What it generates is a working theme rather than a
 stub — a violet accent over the default palette, and a neutral dark ground to retint — so
 you can see it in the example app before choosing a single colour. See

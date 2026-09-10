@@ -69,14 +69,14 @@ const theme = useTheme();
 theme.schemes.includes('dark'); // false for a light-only theme
 ```
 
-Writing one is a single file. [`themes/`](../../themes#readme) is the walkthrough;
-[`@batik-prototype/theme-ocean`](../../themes/ocean#readme) is the fullest example.
+Writing one is a single file. [`themes/`](../themes#readme) is the walkthrough;
+[`@batik-prototype/theme-ocean`](../themes/ocean#readme) is the fullest example.
 
 ### The default theme is not a package
 
 The default values of the token variables in this package _are_ the Classic light palette.
 An app that installs nothing but `@batik-prototype/core` already renders a finished-looking
-UI, and [`@batik-prototype/theme-classic`](../../themes/classic#readme) only has to supply
+UI, and [`@batik-prototype/theme-classic`](../themes/classic#readme) only has to supply
 the dark scheme.
 
 That is the reason `ThemeDefinition.light` is optional rather than required: "this theme is

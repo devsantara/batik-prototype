@@ -1,7 +1,7 @@
 packages:
   - apps/*
   - packages/*
-  - themes/*
+  - packages/themes/*
   - tools/*
 savePrefix: ''
 catalogMode: prefer

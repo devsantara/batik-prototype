@@ -1,15 +1,15 @@
 {
-  "name": "@batik-prototype/theme-ocean",
-  "version": "0.3.0",
-  "description": "A calm teal-and-cyan Batik theme with generously rounded shapes, in light and dark",
+  "name": "@batik-prototype/theme-classic",
+  "version": "0.1.1",
+  "description": "The default Batik theme: cool slate neutrals with a confident blue accent, plus a dark scheme",
   "keywords": [
+    "classic",
     "design system",
     "design tokens",
-    "ocean",
     "stylex",
     "theme"
   ],
-  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/themes/ocean#readme",
+  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/packages/themes/classic#readme",
   "bugs": {
     "url": "https://github.com/devsantara/batik-prototype/issues"
   },
@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devsantara/batik-prototype.git",
-    "directory": "themes/ocean"
+    "directory": "packages/themes/classic"
   },
   "files": [
     "dist",

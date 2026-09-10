@@ -32,7 +32,9 @@ export default createTemplate({
     name: z
       .string()
       .regex(NAME_PATTERN, 'Use a lowercase kebab-case name, without the scope (e.g. `violet`)')
-      .describe('Theme name without the `theme-` prefix, and the directory name under themes/'),
+      .describe(
+        'Theme name without the `theme-` prefix, and the directory name under packages/themes/',
+      ),
     description: z
       .string()
       .min(1)
@@ -98,11 +100,11 @@ export default createTemplate({
       // `vp create` only wires a generated package into the workspace when it
       // was handed a `--directory` itself, which it never is here - bin/index.ts
       // derives one instead. Install from the new theme: pnpm picks it up
-      // through the `themes/*` glob and links @batik-prototype/core.
+      // through the `packages/themes/*` glob and links @batik-prototype/core.
       scripts: ['vp install'],
       suggestions: [
         `Write the first changeset for ${packageName}: pnpm changeset`,
-        `Retint themes/${options.name}/src/${options.name}.ts - the generated theme already renders`,
+        `Retint packages/themes/${options.name}/src/${options.name}.ts - the generated theme already renders`,
         `Add ${exportName(options.name)} to the theme picker in apps/example/src/app.tsx`,
       ],
     };
@@ -194,7 +196,7 @@ import * as stylex from '@stylexjs/stylex';
 // Anything this theme does not override keeps its default from
 // @batik-prototype/core, which is a complete palette - so only the accent needs
 // to change for the theme to look like its own thing. The full list of what you
-// can reach is in themes/README.md.
+// can reach is in packages/themes/README.md.
 const light = stylex.createTheme(color, {
   accent: '#7c3aed',
   accentHover: '#6d28d9',
@@ -243,7 +245,7 @@ const dark = stylex.createTheme(color, {
 });
 
 // A third slot, \`base\`, applies in every scheme - radii, type, spacing. See
-// themes/ocean for one that uses it.
+// packages/themes/ocean for one that uses it.
 export const ${exportName(name)} = defineTheme({ name: '${name}', light, dark });
 `;
 }

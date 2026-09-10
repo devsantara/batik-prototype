@@ -51,7 +51,7 @@ later entries win).
 Token, theme, and utility packages — publishable, no JSX:
 
 ```jsonc
-// themes/ocean/tsconfig.json
+// packages/themes/ocean/tsconfig.json
 {
   "extends": [
     "@batik-prototype/config/typescript/tsconfig.browser.json",

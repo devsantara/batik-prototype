@@ -10,11 +10,11 @@ import { fileURLToPath } from 'node:url';
 export const PACKAGES_DIRECTORY = 'packages';
 
 /**
- * Where a generated theme lands. Matches the `themes/*` glob in
+ * Where a generated theme lands. Matches the `packages/themes/*` glob in
  * pnpm-workspace.yaml, and is consumed by `@batik-prototype/create-theme`
  * through this module's `./workspace` export.
  */
-export const THEMES_DIRECTORY = 'themes';
+export const THEMES_DIRECTORY = 'packages/themes';
 
 /** The file that marks the workspace root. */
 const WORKSPACE_MARKER = 'pnpm-workspace.yaml';

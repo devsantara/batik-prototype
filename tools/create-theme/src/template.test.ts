@@ -37,15 +37,16 @@ function read(files: Files, ...segments: string[]): string {
 }
 
 describe('produce', () => {
-  it('prefixes the published name and lands the theme under themes/', async () => {
+  it('prefixes the published name and lands the theme under packages/themes/', async () => {
     const manifest: unknown = JSON.parse(read(await produce(), 'package.json'));
 
     expect(manifest).toMatchObject({
       name: '@batik-prototype/theme-deep-violet',
       version: '0.0.0',
       description: OPTIONS.description,
-      homepage: 'https://github.com/devsantara/batik-prototype/tree/main/themes/deep-violet#readme',
-      repository: { directory: 'themes/deep-violet' },
+      homepage:
+        'https://github.com/devsantara/batik-prototype/tree/main/packages/themes/deep-violet#readme',
+      repository: { directory: 'packages/themes/deep-violet' },
     });
   });
 

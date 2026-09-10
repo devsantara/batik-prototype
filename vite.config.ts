@@ -12,7 +12,7 @@ export default defineConfig({
       },
       {
         name: 'theme',
-        description: 'A Batik theme under themes/, generated ready to render',
+        description: 'A Batik theme under packages/themes/, generated ready to render',
         template: './tools/create-theme',
       },
     ],
@@ -21,7 +21,7 @@ export default defineConfig({
     '*': 'vp check --fix',
   },
   test: {
-    include: ['{apps,packages,themes,tools}/**/*.test.{ts,tsx}'],
+    include: ['{apps,packages,tools}/**/*.test.{ts,tsx}'],
     passWithNoTests: true,
   },
   fmt: {

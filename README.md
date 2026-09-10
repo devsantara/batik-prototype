@@ -38,18 +38,18 @@ import { ocean } from '@batik-prototype/theme-ocean';
 
 ## Packages
 
-| Package                                                            | What it is                                             |
-| ------------------------------------------------------------------ | ------------------------------------------------------ |
-| [`@batik-prototype/core`](./packages/core#readme)                  | Components, design tokens, and the theme runtime       |
-| [`@batik-prototype/theme-classic`](./themes/classic#readme)        | The default theme — slate and blue, plus a dark scheme |
-| [`@batik-prototype/theme-ocean`](./themes/ocean#readme)            | Near-monochrome slate, one teal accent, tight corners  |
-| [`@batik-prototype/theme-sunset`](./themes/sunset#readme)          | Warm greys, one terracotta accent, squared off, serif  |
-| [`@batik-prototype/example`](./apps/example#readme)                | React + Vite app that consumes all of the above        |
-| [`@batik-prototype/config`](./packages/config#readme)              | Shared TypeScript and Vite+ configuration _(internal)_ |
-| [`@batik-prototype/create-package`](./tools/create-package#readme) | The generator behind `vp create package` _(internal)_  |
-| [`@batik-prototype/create-theme`](./tools/create-theme#readme)     | The generator behind `vp create theme` _(internal)_    |
+| Package                                                              | What it is                                             |
+| -------------------------------------------------------------------- | ------------------------------------------------------ |
+| [`@batik-prototype/core`](./packages/core#readme)                    | Components, design tokens, and the theme runtime       |
+| [`@batik-prototype/theme-classic`](./packages/themes/classic#readme) | The default theme — slate and blue, plus a dark scheme |
+| [`@batik-prototype/theme-ocean`](./packages/themes/ocean#readme)     | Near-monochrome slate, one teal accent, tight corners  |
+| [`@batik-prototype/theme-sunset`](./packages/themes/sunset#readme)   | Warm greys, one terracotta accent, squared off, serif  |
+| [`@batik-prototype/example`](./apps/example#readme)                  | React + Vite app that consumes all of the above        |
+| [`@batik-prototype/config`](./packages/config#readme)                | Shared TypeScript and Vite+ configuration _(internal)_ |
+| [`@batik-prototype/create-package`](./tools/create-package#readme)   | The generator behind `vp create package` _(internal)_  |
+| [`@batik-prototype/create-theme`](./tools/create-theme#readme)       | The generator behind `vp create theme` _(internal)_    |
 
-[`themes/`](./themes#readme) is the guide to writing a theme of your own.
+[`themes/`](./packages/themes#readme) is the guide to writing a theme of your own.
 
 ## How the theming works
 

@@ -9,7 +9,7 @@
     "sunset",
     "theme"
   ],
-  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/themes/sunset#readme",
+  "homepage": "https://github.com/devsantara/batik-prototype/tree/main/packages/themes/sunset#readme",
   "bugs": {
     "url": "https://github.com/devsantara/batik-prototype/issues"
   },
@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devsantara/batik-prototype.git",
-    "directory": "themes/sunset"
+    "directory": "packages/themes/sunset"
   },
   "files": [
     "dist",

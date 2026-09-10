@@ -1,7 +1,7 @@
 # `@batik-prototype/create-theme`
 
 The code generator behind `vp create theme`. It scaffolds a Batik theme package under
-`themes/` with the workspace conventions already in place — the browser + library tsconfig
+`packages/themes/` with the workspace conventions already in place — the browser + library tsconfig
 pair, the [StyleX build config](../../packages/config#the-stylex-variant), the two
 hand-written `exports` maps, and peer dependencies on `@batik-prototype/core` and
 `@stylexjs/stylex`.
@@ -19,7 +19,7 @@ vp create theme -- --name violet --description "Deep violet with a soft dusk sch
 ```
 
 `--name` is the unscoped, kebab-case name. It decides the published name
-(`@batik-prototype/theme-violet`), the directory (`themes/violet`) and the exported
+(`@batik-prototype/theme-violet`), the directory (`packages/themes/violet`) and the exported
 identifier (`violet`, camel-cased from kebab). `vp create` takes it from there: workspace
 registration, `pnpm install`, and `vp fmt`.
 

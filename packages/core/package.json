@@ -42,6 +42,7 @@
     "./tokens/font.stylex": "./src/tokens/font.stylex.ts",
     "./tokens/shape.stylex": "./src/tokens/shape.stylex.ts",
     "./tokens/space.stylex": "./src/tokens/space.stylex.ts",
+    "./tokens/switch.stylex": "./src/tokens/switch.stylex.ts",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -53,6 +54,7 @@
       "./tokens/font.stylex": "./dist/tokens/font.stylex.js",
       "./tokens/shape.stylex": "./dist/tokens/shape.stylex.js",
       "./tokens/space.stylex": "./dist/tokens/space.stylex.js",
+      "./tokens/switch.stylex": "./dist/tokens/switch.stylex.js",
       "./package.json": "./package.json"
     },
     "access": "public"

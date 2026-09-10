@@ -18,6 +18,7 @@ export { Badge, type BadgeProps, type BadgeTone } from '#/components/badge';
 export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from '#/components/button';
 export { Card, type CardPadding, type CardProps, type CardVariant } from '#/components/card';
 export { Input, type InputProps, type InputSize } from '#/components/input';
+export { Switch, type SwitchProps, type SwitchSize } from '#/components/switch';
 export { usePreferredColorScheme, type ColorSchemePreference } from '#/theme/color-scheme';
 export {
   defineTheme,

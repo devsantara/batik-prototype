@@ -1,6 +1,7 @@
 import { defineTheme } from '@batik-prototype/core/theme';
 import { color } from '@batik-prototype/core/tokens/color.stylex';
 import { shadow } from '@batik-prototype/core/tokens/shape.stylex';
+import { toggle } from '@batik-prototype/core/tokens/switch.stylex';
 import * as stylex from '@stylexjs/stylex';
 
 const darkColor = stylex.createTheme(color, {
@@ -44,6 +45,21 @@ const darkShadow = stylex.createTheme(shadow, {
   lg: '0 12px 32px rgba(0, 0, 0, 0.6)',
 });
 
+// The off track has to be lighter than the page rather than darker, which is
+// the one switch rule that does not survive a straight light-to-dark flip, and
+// the knob picks up the surface colour so an off switch still reads as a knob
+// sitting in a groove.
+const darkToggle = stylex.createTheme(toggle, {
+  trackOff: '#334155',
+  trackOn: '#3b82f6',
+  borderOff: '#475569',
+  borderOn: '#3b82f6',
+
+  thumbOff: '#cbd5e1',
+  thumbOn: '#0b1120',
+  thumbShadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
+});
+
 /**
  * The default Batik theme.
  *
@@ -55,5 +71,5 @@ const darkShadow = stylex.createTheme(shadow, {
  */
 export const classic = defineTheme({
   name: 'classic',
-  dark: [darkColor, darkShadow],
+  dark: [darkColor, darkShadow, darkToggle],
 });

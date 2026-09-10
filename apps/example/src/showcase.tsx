@@ -1,4 +1,12 @@
-import { Accordion, Badge, Button, Card, Input, type AccordionItem } from '@batik-prototype/core';
+import {
+  Accordion,
+  Badge,
+  Button,
+  Card,
+  Input,
+  Switch,
+  type AccordionItem,
+} from '@batik-prototype/core';
 import { color } from '@batik-prototype/core/tokens/color.stylex';
 import { font } from '@batik-prototype/core/tokens/font.stylex';
 import { radius } from '@batik-prototype/core/tokens/shape.stylex';
@@ -206,6 +214,31 @@ export function Showcase() {
             <Field label="Plan">
               {(id) => <Input id={id} disabled defaultValue="Enterprise" />}
             </Field>
+          </div>
+        </Card>
+      </Section>
+
+      <Section
+        title="Switch"
+        caption="A checkbox underneath, so the form, the keyboard and the screen reader come free."
+      >
+        <Card>
+          <div {...stylex.props(styles.stack)}>
+            <div {...stylex.props(styles.row)}>
+              <Switch size="sm">Small</Switch>
+              <Switch size="md" defaultChecked>
+                Medium
+              </Switch>
+              <Switch size="lg" defaultChecked>
+                Large
+              </Switch>
+            </div>
+            <div {...stylex.props(styles.row)}>
+              <Switch disabled>Disabled</Switch>
+              <Switch disabled defaultChecked>
+                Disabled and on
+              </Switch>
+            </div>
           </div>
         </Card>
       </Section>

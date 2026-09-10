@@ -2,6 +2,7 @@ import { defineTheme } from '@batik-prototype/core/theme';
 import { color } from '@batik-prototype/core/tokens/color.stylex';
 import { font } from '@batik-prototype/core/tokens/font.stylex';
 import { radius, shadow } from '@batik-prototype/core/tokens/shape.stylex';
+import { toggle } from '@batik-prototype/core/tokens/switch.stylex';
 import * as stylex from '@stylexjs/stylex';
 
 // Near-monochrome slate. The page and the sheets sitting on it are separated by
@@ -89,6 +90,35 @@ const darkShadow = stylex.createTheme(shadow, {
   lg: '0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -14px rgba(0, 0, 0, 0.6)',
 });
 
+// The switch stays fully round even though the rest of the ramp tightens: it
+// is the one control whose shape carries meaning rather than style, and a
+// rounded track is what says "this slides" instead of "this is a checkbox".
+// Off is a hairline groove rather than a filled pill - the same restraint the
+// palette shows everywhere else - so the accent only appears when it means on.
+const lightToggle = stylex.createTheme(toggle, {
+  trackOff: '#f1f4f5',
+  trackOn: '#0e7490',
+  borderOff: '#d2d9db',
+  borderOn: '#0e7490',
+
+  thumbOff: '#ffffff',
+  thumbOn: '#ffffff',
+  thumbShadow: '0 1px 2px rgba(16, 22, 25, 0.14)',
+});
+
+// On dark the accent is a pale teal, so the knob has to go dark to stay
+// visible on top of it.
+const darkToggle = stylex.createTheme(toggle, {
+  trackOff: '#1e282c',
+  trackOn: '#5eead4',
+  borderOff: '#2d3a3f',
+  borderOn: '#5eead4',
+
+  thumbOff: '#8d9ba0',
+  thumbOn: '#08171a',
+  thumbShadow: '0 1px 2px rgba(0, 0, 0, 0.45)',
+});
+
 // Scheme-independent, so it goes in `base` and is written once. Corners are
 // tight enough to read as square at a glance while still softening the
 // hairlines - the ramp only opens up for the largest surfaces.
@@ -112,6 +142,6 @@ const modernType = stylex.createTheme(font, {
 export const ocean = defineTheme({
   name: 'ocean',
   base: [softShape, modernType],
-  light: [lightColor, lightShadow],
-  dark: [darkColor, darkShadow],
+  light: [lightColor, lightShadow, lightToggle],
+  dark: [darkColor, darkShadow, darkToggle],
 });

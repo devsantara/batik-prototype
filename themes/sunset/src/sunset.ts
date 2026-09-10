@@ -2,6 +2,7 @@ import { defineTheme } from '@batik-prototype/core/theme';
 import { color } from '@batik-prototype/core/tokens/color.stylex';
 import { font } from '@batik-prototype/core/tokens/font.stylex';
 import { radius, shadow } from '@batik-prototype/core/tokens/shape.stylex';
+import { toggle } from '@batik-prototype/core/tokens/switch.stylex';
 import * as stylex from '@stylexjs/stylex';
 
 // Warm greys rather than orange. The page is off-white with a trace of amber in
@@ -89,6 +90,38 @@ const darkShadow = stylex.createTheme(shadow, {
   lg: '0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -14px rgba(0, 0, 0, 0.6)',
 });
 
+// Where Ocean keeps the switch round, Sunset carries its squared corners all
+// the way in: a small rounded-rectangle knob sliding in a rounded-rectangle
+// slot, which is what the rest of this theme would draw if it drew a switch.
+// The knob is flat, too - there is almost no elevation anywhere else here.
+const shapedToggle = stylex.createTheme(toggle, {
+  trackRadius: '4px',
+  thumbRadius: '2px',
+});
+
+const lightToggle = stylex.createTheme(toggle, {
+  trackOff: '#f4f0ec',
+  trackOn: '#b4530f',
+  borderOff: '#dbd1c8',
+  borderOn: '#b4530f',
+
+  thumbOff: '#ffffff',
+  thumbOn: '#ffffff',
+  thumbShadow: '0 1px 1px rgba(28, 22, 20, 0.12)',
+});
+
+// The dark accent is a light amber, so the knob inverts on top of it.
+const darkToggle = stylex.createTheme(toggle, {
+  trackOff: '#231f1c',
+  trackOn: '#e8a26a',
+  borderOff: '#3a3330',
+  borderOn: '#e8a26a',
+
+  thumbOff: '#9c918a',
+  thumbOn: '#1a1006',
+  thumbShadow: '0 1px 1px rgba(0, 0, 0, 0.45)',
+});
+
 // The mirror image of Ocean: near-square corners rather than pill-soft ones.
 // `pill` is squared off too - a badge that stays round while its neighbours go
 // sharp reads as an oversight rather than a decision.
@@ -110,7 +143,7 @@ const serifType = stylex.createTheme(font, {
 /** Warm greys with one terracotta accent, squared off, set in a serif. */
 export const sunset = defineTheme({
   name: 'sunset',
-  base: [sharpShape, serifType],
-  light: [lightColor, lightShadow],
-  dark: [darkColor, darkShadow],
+  base: [sharpShape, serifType, shapedToggle],
+  light: [lightColor, lightShadow, lightToggle],
+  dark: [darkColor, darkShadow, darkToggle],
 });

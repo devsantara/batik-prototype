@@ -37,13 +37,14 @@ anyway to compile your own StyleX. See [Setting up the compiler](#setting-up-the
 | `Card`                         | `elevated` / `outlined`, four padding steps               |
 | `Badge`                        | Five tones: neutral, accent, success, warning, danger     |
 | `Accordion`                    | `contained` / `separated`, optional `exclusive` rows      |
+| `Switch`                       | Three sizes, controlled or not, disabled                  |
 | `ThemeProvider`                | Applies a theme, resolves the colour scheme               |
 | `useTheme` / `useColorScheme`  | Read the active theme and the resolved scheme             |
 | `usePreferredColorScheme`      | The OS preference on its own, kept live                   |
 | `defineTheme` / `resolveTheme` | The theme contract, also at `@batik-prototype/core/theme` |
 
 Components are plain elements underneath — `<button>`, `<input>`, `<div>`, `<span>`,
-`<details>` — and forward every prop those accept, `ref` included. There is no wrapper, no
+`<details>`, `<label>` — and forward every prop those accept, `ref` included. There is no wrapper, no
 portal and no context lookup in the render path. `Accordion` takes its rows as an `items`
 array for that last reason: a compound `<Accordion.Item>` would have to read the group's
 variant and its `exclusive` group name out of context on every render.
@@ -85,13 +86,14 @@ already what the tokens say" is a real answer, and Classic is the theme that giv
 
 Everything a component renders comes from a variable group, so a theme can reach it.
 
-| Entry point                                      | Exports                      |
-| ------------------------------------------------ | ---------------------------- |
-| `@batik-prototype/core/tokens/color.stylex`      | `color` — 23 colour roles    |
-| `@batik-prototype/core/tokens/font.stylex`       | `font`                       |
-| `@batik-prototype/core/tokens/space.stylex`      | `space`                      |
-| `@batik-prototype/core/tokens/shape.stylex`      | `radius`, `border`, `shadow` |
-| `@batik-prototype/core/tokens/breakpoint.stylex` | `breakpoint` — media queries |
+| Entry point                                      | Exports                                |
+| ------------------------------------------------ | -------------------------------------- |
+| `@batik-prototype/core/tokens/color.stylex`      | `color` — 23 colour roles              |
+| `@batik-prototype/core/tokens/font.stylex`       | `font`                                 |
+| `@batik-prototype/core/tokens/space.stylex`      | `space`                                |
+| `@batik-prototype/core/tokens/shape.stylex`      | `radius`, `border`, `shadow`           |
+| `@batik-prototype/core/tokens/switch.stylex`     | `toggle` — the switch's track and knob |
+| `@batik-prototype/core/tokens/breakpoint.stylex` | `breakpoint` — media queries           |
 
 App code reads them the same way a component does:
 
@@ -107,6 +109,13 @@ const styles = stylex.create({
 
 Styles written that way are themed for free: they read the same variables the active theme
 overrode.
+
+**`toggle` is the one component-scoped group.** A switch is painted rather than composed:
+its off track is neither `surface` nor `neutralSurface` in every theme, its knob is not
+always the sheet colour, and its corners do not follow `radius.pill` — Sunset squares the
+ramp off, and a switch that squares off with it stops reading as a switch. Wiring those to
+the shared groups would mean a theme could not move any of them without moving badges and
+cards too. Sizes stay out of it: track and thumb geometry is the component's.
 
 **`breakpoint` is `defineConsts`, not `defineVars`.** A media query is a condition the
 compiler resolves at build time, not a value a theme can override at runtime — there is no

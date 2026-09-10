@@ -1,5 +1,12 @@
 # @batik-prototype/theme-ocean
 
+## 0.3.0
+
+### Minor Changes
+
+- [`f0d9b6d`](https://github.com/devsantara/batik-prototype/commit/f0d9b6dfb7597ae067a761863967573b5ea0308b) - Make the Ocean theme minimalist: a near-monochrome slate palette with a single teal
+  accent, tighter corners (3/6/10px), near-absent elevation, and zero tracking.
+
 ## 0.2.0
 
 ### Minor Changes

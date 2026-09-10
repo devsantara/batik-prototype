@@ -37,12 +37,14 @@ jobs:
       # `publish` is pnpm, not `changeset publish`: publishConfig.exports and
       # the workspace:* rewrite are pnpm features. npm ignores both and would
       # publish `exports` still pointing at ./src/index.ts.
-      - uses: changesets/action@v1
+      - uses: changesets/action@v2.1.2
         with:
           version: pnpm run changeset:version
           publish: pnpm run changeset:publish
           title: 'chore(release): version packages'
           commit: 'chore(release): version packages'
+          createGithubReleases: true
+          setupGitUser: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Must be `NPM_TOKEN`, not the `NODE_AUTH_TOKEN` that actions/setup-node

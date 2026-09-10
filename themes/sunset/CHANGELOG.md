@@ -1,5 +1,14 @@
 # @batik-prototype/theme-sunset
 
+## 0.2.0
+
+### Minor Changes
+
+- [`5436a84`](https://github.com/devsantara/batik-prototype/commit/5436a84529feb3191d3f0912a7ec16c388d976d7) - Make the Sunset theme minimalist: warm near-neutral palette with a single terracotta
+  accent, desaturated tonal surfaces, near-absent elevation, and zero tracking on small
+  labels. Squared corners and the serif stack are unchanged. Docs palette tables updated to
+  match.
+
 ## 0.1.1
 
 ### Patch Changes

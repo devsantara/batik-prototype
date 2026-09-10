@@ -4,108 +4,111 @@ import { font } from '@batik-prototype/core/tokens/font.stylex';
 import { radius, shadow } from '@batik-prototype/core/tokens/shape.stylex';
 import * as stylex from '@stylexjs/stylex';
 
-// Cool slate neutrals with a single cyan accent, rather than a page tinted mint
-// throughout. Surfaces stay near-neutral so the accent is the only saturated
-// thing on screen, which is what makes the result read as clean.
+// Near-monochrome slate. The page and the sheets sitting on it are separated by
+// a hairline rather than a tint, and the only saturated colour in the whole
+// palette is the accent - which is itself pulled back from cyan towards teal so
+// it reads as ink, not as a highlighter.
 const lightColor = stylex.createTheme(color, {
-  background: '#f7f9fa',
+  background: '#fbfcfc',
   surface: '#ffffff',
-  surfaceHover: '#f1f5f6',
+  surfaceHover: '#f4f6f7',
 
-  foreground: '#0d1b1f',
-  muted: '#5f7379',
+  foreground: '#101619',
+  muted: '#6b7c81',
 
-  border: '#e3e9ea',
-  borderStrong: '#cbd6d8',
-  ring: '#06b6d4',
+  border: '#e8eced',
+  borderStrong: '#d2d9db',
+  ring: '#0e7490',
 
-  accent: '#0891b2',
-  accentHover: '#0e7490',
-  accentActive: '#155e75',
+  accent: '#0e7490',
+  accentHover: '#155e75',
+  accentActive: '#164e63',
   onAccent: '#ffffff',
 
-  danger: '#e11d48',
+  danger: '#be123c',
 
-  neutralSurface: '#eef2f3',
-  onNeutralSurface: '#33474d',
-  accentSurface: '#e0f7fb',
+  // Washes, not fills: light enough that a row of badges still reads as text
+  // on the page rather than as a row of coloured chips.
+  neutralSurface: '#f1f4f5',
+  onNeutralSurface: '#3b4b50',
+  accentSurface: '#e6f2f5',
   onAccentSurface: '#155e75',
-  successSurface: '#dcf5e7',
-  onSuccessSurface: '#116043',
-  warningSurface: '#fdf0d5',
-  onWarningSurface: '#8a5300',
-  dangerSurface: '#fee7ea',
+  successSurface: '#e6f3ec',
+  onSuccessSurface: '#14684a',
+  warningSurface: '#f7efe0',
+  onWarningSurface: '#7c4d08',
+  dangerSurface: '#f8e9ec',
   onDangerSurface: '#9f1239',
 });
 
-// Dark is a deep slate rather than a bottle-green, so the same cyan accent
-// carries over without the whole surface glowing.
+// Dark keeps the same restraint: a flat slate page, one step of lift for a
+// surface, and an accent bright enough to be legible without glowing.
 const darkColor = stylex.createTheme(color, {
-  background: '#0a1216',
-  surface: '#101c21',
-  surfaceHover: '#17272d',
+  background: '#0c1113',
+  surface: '#12191c',
+  surfaceHover: '#182226',
 
-  foreground: '#e8f1f3',
-  muted: '#8ba3aa',
+  foreground: '#e6ecee',
+  muted: '#8d9ba0',
 
-  border: '#1d2f36',
-  borderStrong: '#2c444d',
-  ring: '#22d3ee',
+  border: '#1e282c',
+  borderStrong: '#2d3a3f',
+  ring: '#5eead4',
 
-  accent: '#22d3ee',
-  accentHover: '#67e8f9',
-  accentActive: '#a5f3fc',
-  onAccent: '#06171c',
+  accent: '#5eead4',
+  accentHover: '#99f6e4',
+  accentActive: '#ccfbf1',
+  onAccent: '#08171a',
 
   danger: '#fb7185',
 
-  neutralSurface: '#17272d',
-  onNeutralSurface: '#cfdee2',
-  accentSurface: '#0d3b47',
-  onAccentSurface: '#a5f3fc',
-  successSurface: '#0d3b2e',
+  neutralSurface: '#182226',
+  onNeutralSurface: '#c9d5d8',
+  accentSurface: '#123138',
+  onAccentSurface: '#99f6e4',
+  successSurface: '#12312a',
   onSuccessSurface: '#a7f3d0',
-  warningSurface: '#3f2e10',
+  warningSurface: '#33280f',
   onWarningSurface: '#fde68a',
-  dangerSurface: '#45141f',
+  dangerSurface: '#3a1219',
   onDangerSurface: '#fecdd3',
 });
 
-// Two layers each: a hairline that does the edge work and a wide, low-opacity
-// spread that does the lift. One heavy blur alone reads as a drop shadow from a
-// decade ago.
+// Elevation is close to absent. Borders already separate a sheet from the page,
+// so a shadow only has to say "this one floats" - and only the largest one,
+// for things that genuinely overlay the page, is allowed to be noticed.
 const lightShadow = stylex.createTheme(shadow, {
-  sm: '0 1px 2px rgba(13, 27, 31, 0.06)',
-  md: '0 1px 2px rgba(13, 27, 31, 0.05), 0 6px 16px -4px rgba(13, 27, 31, 0.08)',
-  lg: '0 1px 3px rgba(13, 27, 31, 0.06), 0 18px 44px -12px rgba(13, 27, 31, 0.16)',
+  sm: '0 1px 1px rgba(16, 22, 25, 0.03)',
+  md: '0 1px 2px rgba(16, 22, 25, 0.04), 0 4px 10px -6px rgba(16, 22, 25, 0.06)',
+  lg: '0 1px 2px rgba(16, 22, 25, 0.04), 0 12px 28px -14px rgba(16, 22, 25, 0.12)',
 });
 
 const darkShadow = stylex.createTheme(shadow, {
-  sm: '0 1px 2px rgba(0, 0, 0, 0.45)',
-  md: '0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 16px -4px rgba(0, 0, 0, 0.55)',
-  lg: '0 1px 3px rgba(0, 0, 0, 0.4), 0 18px 44px -12px rgba(0, 0, 0, 0.65)',
+  sm: '0 1px 1px rgba(0, 0, 0, 0.3)',
+  md: '0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 10px -6px rgba(0, 0, 0, 0.45)',
+  lg: '0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -14px rgba(0, 0, 0, 0.6)',
 });
 
-// Scheme-independent, so it goes in `base` and is written once. Rounding is
-// the loudest thing a theme can change without touching a single component.
-// Tighter than before: pill-soft corners on every control read as playful, and
-// a consistent 10/12/16 ramp reads as considered.
+// Scheme-independent, so it goes in `base` and is written once. Corners are
+// tight enough to read as square at a glance while still softening the
+// hairlines - the ramp only opens up for the largest surfaces.
 const softShape = stylex.createTheme(radius, {
-  sm: '6px',
-  md: '10px',
-  lg: '16px',
+  sm: '3px',
+  md: '6px',
+  lg: '10px',
   pill: '999px',
 });
 
 // A modern UI stack - Inter where it is installed, falling back to the same
-// system faces as the default. No web font is fetched.
+// system faces as the default. No web font is fetched. Tracking sits at zero:
+// letterspaced small caps are decoration, and there is none here.
 const modernType = stylex.createTheme(font, {
   family:
     'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-  trackingWide: '0.005em',
+  trackingWide: '0em',
 });
 
-/** Cool slate and cyan, evenly rounded, quietly modern. Light and dark. */
+/** Near-monochrome slate with one teal accent, tight corners, almost no shadow. */
 export const ocean = defineTheme({
   name: 'ocean',
   base: [softShape, modernType],

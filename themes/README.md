@@ -3,11 +3,11 @@
 One theme, one package. Each directory here publishes as `@batik-prototype/theme-<name>`
 and is installed on its own:
 
-| Package                             | Looks like                                          | Schemes     |
-| ----------------------------------- | --------------------------------------------------- | ----------- |
-| [`theme-classic`](./classic#readme) | Cool slate neutrals, confident blue. The default.   | light, dark |
-| [`theme-ocean`](./ocean#readme)     | Teal and cyan, generously rounded.                  | light, dark |
-| [`theme-sunset`](./sunset#readme)   | Warm amber and orange, squared off, set in a serif. | light, dark |
+| Package                             | Looks like                                             | Schemes     |
+| ----------------------------------- | ------------------------------------------------------ | ----------- |
+| [`theme-classic`](./classic#readme) | Cool slate neutrals, confident blue. The default.      | light, dark |
+| [`theme-ocean`](./ocean#readme)     | Near-monochrome slate, one teal accent, tight corners. | light, dark |
+| [`theme-sunset`](./sunset#readme)   | Warm amber and orange, squared off, set in a serif.    | light, dark |
 
 ```bash
 pnpm add @batik-prototype/theme-ocean

@@ -1,6 +1,7 @@
 # `@batik-prototype/theme-ocean`
 
-Calm teal and cyan, generously rounded. Light and dark.
+Near-monochrome slate with a single teal accent. Tight corners, hairline borders,
+almost no shadow. Light and dark.
 
 ```bash
 pnpm add @batik-prototype/theme-ocean
@@ -25,8 +26,8 @@ Ocean is the fullest example of the theme contract, and the one to copy from. It
 three slots and overrides three of the five variable groups, which is about as much as a
 theme normally needs.
 
-The `base` slot is the point of interest. Rounding is scheme-independent — a 14px radius is
-a 14px radius on a white page or a black one — so `radius` is written once in `base` rather
+The `base` slot is the point of interest. Rounding is scheme-independent — a 6px radius is
+a 6px radius on a white page or a black one — so `radius` is written once in `base` rather
 than repeated in `light` and `dark`. Colours and shadows genuinely differ per scheme, so
 those are written twice.
 
@@ -38,11 +39,16 @@ without a single component re-render caring which theme is active.
 
 | Role       | Light     | Dark      |
 | ---------- | --------- | --------- |
-| Background | `#f0fbfa` | `#032027` |
-| Surface    | `#ffffff` | `#07303a` |
-| Foreground | `#062e2b` | `#dffaf7` |
-| Accent     | `#0d9488` | `#2dd4bf` |
-| Ring       | `#14b8a6` | `#2dd4bf` |
+| Background | `#fbfcfc` | `#0c1113` |
+| Surface    | `#ffffff` | `#12191c` |
+| Foreground | `#101619` | `#e6ecee` |
+| Accent     | `#0e7490` | `#5eead4` |
+| Ring       | `#0e7490` | `#5eead4` |
 
-The dark accent is the light theme's hover colour rather than a darker teal: on a
-near-black page an accent has to gain luminance to read as accented.
+The accent is the only saturated colour in the palette; every surface, line and label is a
+slate neutral. On a near-black page an accent has to gain luminance to read as accented, so
+dark swaps the deep teal for a light one rather than darkening it.
+
+Elevation is deliberately close to absent — a hairline already separates a sheet from the
+page, so only `shadow.lg`, used by things that genuinely overlay the page, is meant to be
+noticed.

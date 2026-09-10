@@ -1,10 +1,8 @@
 name: Deploy
 
+# Disabled: the push trigger is removed, so deploys only happen when started
+# by hand from the Actions tab.
 on:
-  push:
-    branches: [main]
-  # So a deploy can be re-run without an empty commit - useful after changing a
-  # Pages setting, which does not itself trigger a build.
   workflow_dispatch:
 
 # A Pages site is one shared resource, so deployments queue rather than cancel.

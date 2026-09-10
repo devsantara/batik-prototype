@@ -5,10 +5,12 @@ on:
     branches: [main]
 
 concurrency:
-  group: release-${{ github.workflow }}-${{ github.ref }}
-
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
-  contents: read
+  contents: write
+  id-token: write
+  pull-requests: write
 
 jobs:
   release:
@@ -19,17 +21,15 @@ jobs:
       pull-requests: write # open and update the version PR
       id-token: write # mint the OIDC token npm provenance is signed with
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6.0.1
         with:
           fetch-depth: 0 # changesets needs history to work out what changed
-
+          persist-credentials: true # changesets/action pushes Release PR commits
       - uses: voidzero-dev/setup-vp@v1.19.0
         with:
-          node-version: '24'
+          node-version: "24"
           cache: true
-
-      - run: vp install --frozen-lockfile
-
+      - run: vp install
       # When changesets are pending, this opens/updates the "Version Packages"
       # PR. When that PR merges and none are left, `publish` runs instead.
       #
@@ -38,17 +38,15 @@ jobs:
       # publish `exports` still pointing at ./src/index.ts.
       - uses: changesets/action@v1
         with:
-          version: pnpm run version
-          publish: pnpm run release
-          title: 'chore(release): version packages'
-          commit: 'chore(release): version packages'
+          version: pnpm run changeset:version
+          publish: pnpm run changeset:publish
+          title: "chore(release): version packages"
+          commit: "chore(release): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
           # Must be `NPM_TOKEN`, not the `NODE_AUTH_TOKEN` that actions/setup-node
           # documents. Nothing here runs setup-node - setup-vp installs the
           # toolchain - so no .npmrc references NODE_AUTH_TOKEN and it would be
           # inert. changesets/action writes the .npmrc itself, keyed on this name.
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
           NPM_CONFIG_PROVENANCE: true

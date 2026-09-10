@@ -20,7 +20,6 @@
   "type": "module",
   "scripts": {
     "build": "vp run -r build",
-    "changeset": "changeset",
     "check": "vp check",
     "check:fix": "vp check --fix",
     "dev": "vp run -r dev",
@@ -29,12 +28,13 @@
     "lint": "vp lint",
     "lint:fix": "vp lint --fix",
     "prepare": "vp config",
-    "release": "vp run -r build && pnpm publish -r --access public --no-git-checks",
     "start": "vp run -r start",
     "test": "vp test",
     "test:coverage": "vp test run --coverage",
     "test:watch": "vp test watch",
-    "version": "changeset version && pnpm install --lockfile-only && vp fmt"
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "catalog:",

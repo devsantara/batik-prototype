@@ -45,8 +45,8 @@ jobs:
           commit-message: 'chore(release): version packages'
           push-git-tags: true
           create-github-releases: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Must be `NPM_TOKEN`, not the `NODE_AUTH_TOKEN` that actions/setup-node
           # documents. Nothing here runs setup-node - setup-vp installs the
           # toolchain - so no .npmrc references NODE_AUTH_TOKEN and it would be

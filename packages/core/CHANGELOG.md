@@ -1,5 +1,13 @@
 # @batik-prototype/core
 
+## 0.3.0
+
+### Minor Changes
+
+- [`6d1ea91`](https://github.com/devsantara/batik-prototype/commit/6d1ea913f263825a71010cc68e4589328ad928e5) - Add `Switch`, an on/off control built on a `role="switch"` checkbox, in three token-driven sizes with controlled, uncontrolled and disabled states.
+
+- [`6d1ea91`](https://github.com/devsantara/batik-prototype/commit/6d1ea913f263825a71010cc68e4589328ad928e5) - Give `Switch` its own token group, `toggle`, at `@batik-prototype/core/tokens/switch.stylex`: track and knob colours per state, the knob's drop shadow, and separate track and thumb radii. Classic, Ocean and Sunset each override it, so the switch now looks like its theme rather than like the same control recoloured — Ocean keeps a round track over a hairline groove, Sunset squares it into a slot, and both dark schemes invert the knob against a light accent.
+
 ## 0.2.0
 
 ### Minor Changes

@@ -27,9 +27,10 @@ jobs:
           persist-credentials: true # changesets/action pushes Release PR commits
       - uses: voidzero-dev/setup-vp@v1.19.0
         with:
-          node-version: "24"
+          node-version: '24'
           cache: true
       - run: vp install
+      - run: vp run build
       # When changesets are pending, this opens/updates the "Version Packages"
       # PR. When that PR merges and none are left, `publish` runs instead.
       #
@@ -40,8 +41,8 @@ jobs:
         with:
           version: pnpm run changeset:version
           publish: pnpm run changeset:publish
-          title: "chore(release): version packages"
-          commit: "chore(release): version packages"
+          title: 'chore(release): version packages'
+          commit: 'chore(release): version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Must be `NPM_TOKEN`, not the `NODE_AUTH_TOKEN` that actions/setup-node

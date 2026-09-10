@@ -1,7 +1,7 @@
 # `@batik-prototype/theme-ocean`
 
-Near-monochrome slate with a single teal accent. Tight corners, hairline borders,
-almost no shadow. Light and dark.
+Near-monochrome slate with a single teal accent. Fully rounded, hairline borders, almost no
+shadow. Light and dark.
 
 ```bash
 pnpm add @batik-prototype/theme-ocean
@@ -14,25 +14,29 @@ import { ocean } from '@batik-prototype/theme-ocean';
 <ThemeProvider theme={ocean}>{children}</ThemeProvider>;
 ```
 
-| Slot    | Overrides         |
-| ------- | ----------------- |
-| `base`  | `radius`          |
-| `light` | `color`, `shadow` |
-| `dark`  | `color`, `shadow` |
+| Section      | Sets                                                                       |
+| ------------ | -------------------------------------------------------------------------- |
+| `tokens`     | every token; `colors` and `shadow` as pairs, a fully rounded `radius` ramp |
+| `components` | `switch` — every token; a hairline off track, fully round                  |
+| `icons`      | `chevron`                                                                  |
 
 ## The reference theme
 
-Ocean is the fullest example of the theme contract, and the one to copy from. It uses all
-three slots and overrides three of the five variable groups, which is about as much as a
-theme normally needs.
+Ocean is the fullest example of the theme contract, and the one to copy from.
 
-The `base` slot is the point of interest. Rounding is scheme-independent — a 6px radius is
-a 6px radius on a white page or a black one — so `radius` is written once in `base` rather
-than repeated in `light` and `dark`. Colours and shadows genuinely differ per scheme, so
-those are written twice.
+The point of interest is what it writes once and what it writes twice. Rounding is
+scheme-independent — a pill is a pill on a white page or a black one — so each `radius`
+token is one string. Colours and shadows genuinely differ per scheme, so those are
+`[light, dark]` pairs.
+
+Everything is fully rounded — every button, input and badge is a pill — except the largest
+surfaces: cards and accordions stop at 24px, since a card rounded to its full height would clip
+whatever sits in its corners. The switch is round like the rest, which suits it: a rounded track
+is what says "this slides" rather than "this is a checkbox". Like every section of the contract,
+Ocean sets all nine of its switch tokens.
 
 No component knows any of this happened. Switching to Ocean in
-[`apps/example`](../../apps/example#readme) rounds every button, card, input and badge
+[`apps/example`](../../../apps/example#readme) restyles every button, card, input and badge
 without a single component re-render caring which theme is active.
 
 ## Palette

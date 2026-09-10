@@ -50,19 +50,17 @@ describe('produce', () => {
     });
   });
 
-  it('peers on core and StyleX, so both halves compile against one runtime', async () => {
-    const manifest: unknown = JSON.parse(read(await produce(), 'package.json'));
+  it('peers on core alone, so a theme is checked against the core the app installed', async () => {
+    const text = read(await produce(), 'package.json');
+    const manifest: unknown = JSON.parse(text);
 
     expect(manifest).toMatchObject({
-      peerDependencies: {
-        '@batik-prototype/core': 'workspace:^',
-        '@stylexjs/stylex': '^0.19.0',
-      },
-      devDependencies: {
-        '@batik-prototype/core': 'workspace:*',
-        '@stylexjs/stylex': 'catalog:',
-      },
+      peerDependencies: { '@batik-prototype/core': 'workspace:^' },
+      devDependencies: { '@batik-prototype/core': 'workspace:*' },
     });
+
+    // A theme is data. Declaring StyleX would also trip the unused-dependency gate.
+    expect(text).not.toContain('@stylexjs/stylex');
   });
 
   it('writes both exports maps, so pnpm publish can swap source for dist', async () => {
@@ -76,9 +74,9 @@ describe('produce', () => {
     });
   });
 
-  it('builds with the StyleX library config rather than the plain one', async () => {
+  it('builds with the plain library config, having no StyleX to ship', async () => {
     expect(read(await produce(), 'vite.config.ts')).toBe(
-      "export { default } from '@batik-prototype/config/vite/stylex-library';\n",
+      "export { default } from '@batik-prototype/config/vite/library';\n",
     );
   });
 
@@ -89,17 +87,25 @@ describe('produce', () => {
     expect(read(files, 'src', 'deep-violet.ts')).toContain('export const deepViolet =');
   });
 
-  it('generates a theme that already renders, not a stub', async () => {
+  it('generates a complete theme, not a stub', async () => {
     const source = read(await produce(), 'src', 'deep-violet.ts');
 
-    // Tokens come from their own `.stylex` entry point - a barrel import would
-    // hash to a variable the stylesheet never defines.
-    expect(source).toContain("from '@batik-prototype/core/tokens/color.stylex'");
-    expect(source).toContain("defineTheme({ name: 'deep-violet', light, dark })");
+    // Data against the contract: one import, no StyleX, no token files.
+    expect(source).toContain("import { defineTheme } from '@batik-prototype/core/theme';");
+    expect(source).not.toContain('stylex');
+    expect(source).toContain("export const deepViolet = defineTheme('deep-violet', {");
 
-    // The dark scheme carries its own ground; overriding the accent alone would
-    // leave dark text on a dark page.
-    expect(source).toContain('background:');
+    // Every required section: the contract requires all of them.
+    for (const section of ['colors:', 'typography:', 'spacing:', 'radius:', 'border:', 'shadow:']) {
+      expect(source).toContain(section);
+    }
+
+    expect(source).toContain('icons:');
+    expect(source).toContain('components:');
+    expect(source).toContain('thumbRadius:');
+
+    // A dark scheme, carried as pairs.
+    expect(source).toContain("background: ['#f8fafc', '#140f1f'],");
   });
 
   it('copies the workspace license verbatim', async () => {

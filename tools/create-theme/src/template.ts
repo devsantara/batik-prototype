@@ -19,9 +19,6 @@ const NAME_PATTERN = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
  */
 const INITIAL_VERSION = '0.0.0';
 
-/** The `@stylexjs/stylex` range a generated theme peers on, matching the rest of the repo. */
-const STYLEX_RANGE = '^0.19.0';
-
 export default createTemplate({
   about: {
     name: pkgJson.name,
@@ -87,11 +84,9 @@ export default createTemplate({
   "include": ["src"]
 }
 `,
-        // Not the plain library config: a StyleX package ships its
-        // `createTheme()` calls for the consuming app to compile, so it builds
-        // unminified. See packages/config#the-stylex-variant.
-        'vite.config.ts':
-          "export { default } from '@batik-prototype/config/vite/stylex-library';\n",
+        // The plain library config, not the StyleX one: a theme is data, with
+        // no StyleX calls in it for a consuming app to compile.
+        'vite.config.ts': "export { default } from '@batik-prototype/config/vite/library';\n",
         src: {
           'index.ts': `export { ${exportName(options.name)} } from '#/${options.name}';\n`,
           [`${options.name}.ts`]: theme(options.name),
@@ -125,11 +120,11 @@ function exportName(name: string): string {
 /**
  * The manifest every theme package shares.
  *
- * `@batik-prototype/core` and `@stylexjs/stylex` are peers rather than
- * dependencies, and that is what makes a theme work: both halves have to be
- * compiled against one copy of StyleX, or the variables a theme overrides hash
- * differently from the ones the components read. Declaring StyleX as a peer is
- * also what puts a theme on the list of packages the StyleX plugin transforms.
+ * `@batik-prototype/core` is a peer rather than a dependency, and that is what
+ * makes a theme work: `defineTheme()` checks a theme against the contract of
+ * whichever core the app installed, so there has to be exactly one. A theme
+ * has no StyleX of its own to declare - it is data, and core brings the StyleX
+ * it is checked against.
  */
 function packageManifest(context: {
   description: string;
@@ -169,12 +164,10 @@ function packageManifest(context: {
     },
     peerDependencies: {
       '@batik-prototype/core': 'workspace:^',
-      '@stylexjs/stylex': STYLEX_RANGE,
     },
     devDependencies: {
       '@batik-prototype/config': 'workspace:*',
       '@batik-prototype/core': 'workspace:*',
-      '@stylexjs/stylex': 'catalog:',
     },
   };
 }
@@ -182,71 +175,108 @@ function packageManifest(context: {
 /**
  * A complete, working theme rather than a stub.
  *
- * The light scheme changes only the accent, because every other default in
- * `@batik-prototype/core` is already a finished palette - so a freshly generated
- * theme renders correctly before anyone has decided anything. The dark scheme
- * has to say more: a dark accent over the default near-white surfaces would be
- * unreadable, so it carries a neutral dark ground to retint.
+ * Complete because it has to be: the contract's types refuse a theme that
+ * leaves a token out, and core's own values are all unset. It starts from Classic's neutrals with a violet accent, plus a violet
+ * dark ground, so a freshly generated theme renders correctly before anyone
+ * has decided anything. It sets every
+ * component token too: components are part of the contract like everything
+ * else.
  */
 function theme(name: string): string {
   return `import { defineTheme } from '@batik-prototype/core/theme';
-import { color } from '@batik-prototype/core/tokens/color.stylex';
-import * as stylex from '@stylexjs/stylex';
 
-// Anything this theme does not override keeps its default from
-// @batik-prototype/core, which is a complete palette - so only the accent needs
-// to change for the theme to look like its own thing. The full list of what you
-// can reach is in packages/themes/README.md.
-const light = stylex.createTheme(color, {
-  accent: '#7c3aed',
-  accentHover: '#6d28d9',
-  accentActive: '#5b21b6',
-  onAccent: '#ffffff',
-
-  ring: '#8b5cf6',
-  accentSurface: '#ede9fe',
-  onAccentSurface: '#5b21b6',
-});
-
-// The dark scheme has to carry its own ground: the defaults are a light palette,
-// so overriding the accent alone would leave dark text on a dark page.
+// A complete theme: every token the contract names has a value, because the
+// contract requires one - core's own values are all unset. It starts as Classic with a violet accent and a violet dark ground -
+// retint it from here.
 //
-// Delete this call and the \`dark\` slot below for a light-only theme. \`schemes\`
-// then reports ['light'] and a scheme toggle can disable itself.
-const dark = stylex.createTheme(color, {
-  background: '#140f1f',
-  surface: '#1e1730',
-  surfaceHover: '#2a2142',
+// A value is one string for both schemes or a [light, dark] pair. Write every
+// value as one string for a light-only theme; schemes then reports ['light']
+// and a scheme toggle can disable itself. The contract is explained in
+// packages/themes/README.md.
+export const ${exportName(name)} = defineTheme('${name}', {
+  tokens: {
+    colors: {
+      background: ['#f8fafc', '#140f1f'],
+      surface: ['#ffffff', '#1e1730'],
+      surfaceHover: ['#f1f5f9', '#2a2142'],
 
-  foreground: '#ede9fe',
-  muted: '#a99fc4',
+      foreground: ['#0f172a', '#ede9fe'],
+      muted: ['#64748b', '#a99fc4'],
 
-  border: '#2a2142',
-  borderStrong: '#3d3159',
-  ring: '#a78bfa',
+      border: ['#e2e8f0', '#2a2142'],
+      borderStrong: ['#cbd5e1', '#3d3159'],
+      ring: ['#8b5cf6', '#a78bfa'],
 
-  accent: '#a78bfa',
-  accentHover: '#c4b5fd',
-  accentActive: '#ddd6fe',
-  onAccent: '#140f1f',
+      accent: ['#7c3aed', '#a78bfa'],
+      accentHover: ['#6d28d9', '#c4b5fd'],
+      accentActive: ['#5b21b6', '#ddd6fe'],
+      onAccent: ['#ffffff', '#140f1f'],
 
-  danger: '#fb7185',
+      danger: ['#dc2626', '#fb7185'],
 
-  neutralSurface: '#2a2142',
-  onNeutralSurface: '#ddd6fe',
-  accentSurface: '#3d3159',
-  onAccentSurface: '#ddd6fe',
-  successSurface: '#14532d',
-  onSuccessSurface: '#bbf7d0',
-  warningSurface: '#713f12',
-  onWarningSurface: '#fde68a',
-  dangerSurface: '#881337',
-  onDangerSurface: '#fecdd3',
+      neutralSurface: ['#f1f5f9', '#2a2142'],
+      onNeutralSurface: ['#334155', '#ddd6fe'],
+      accentSurface: ['#ede9fe', '#3d3159'],
+      onAccentSurface: ['#5b21b6', '#ddd6fe'],
+      successSurface: ['#dcfce7', '#14532d'],
+      onSuccessSurface: ['#166534', '#bbf7d0'],
+      warningSurface: ['#fef3c7', '#713f12'],
+      onWarningSurface: ['#92400e', '#fde68a'],
+      dangerSurface: ['#fee2e2', '#881337'],
+      onDangerSurface: ['#991b1b', '#fecdd3'],
+    },
+
+    typography: {
+      family:
+        'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      familyMono: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
+
+      sizeSm: '0.8125rem',
+      sizeMd: '0.9375rem',
+      sizeLg: '1.0625rem',
+
+      weightRegular: '400',
+      weightMedium: '500',
+      weightSemibold: '600',
+
+      lineHeightTight: '1.25',
+      lineHeightNormal: '1.5',
+
+      trackingWide: '0.01em',
+    },
+
+    spacing: { xs: '4px', sm: '6px', md: '10px', lg: '14px', xl: '20px', xxl: '28px' },
+
+    radius: { sm: '3px', md: '4px', lg: '6px', pill: '4px' },
+
+    border: { width: '1px', widthStrong: '2px' },
+
+    shadow: {
+      sm: ['0 1px 2px rgba(15, 23, 42, 0.06)', '0 1px 2px rgba(0, 0, 0, 0.5)'],
+      md: ['0 2px 8px rgba(15, 23, 42, 0.08)', '0 2px 8px rgba(0, 0, 0, 0.55)'],
+      lg: ['0 12px 32px rgba(15, 23, 42, 0.12)', '0 12px 32px rgba(0, 0, 0, 0.6)'],
+    },
+  },
+
+  components: {
+    switch: {
+      trackOff: ['#e2e8f0', '#2a2142'],
+      trackOn: ['#7c3aed', '#a78bfa'],
+      borderOff: ['#cbd5e1', '#3d3159'],
+      borderOn: ['#7c3aed', '#a78bfa'],
+      thumbOff: ['#ffffff', '#a99fc4'],
+      thumbOn: ['#ffffff', '#140f1f'],
+      thumbShadow: ['0 1px 2px rgba(15, 23, 42, 0.2)', '0 1px 2px rgba(0, 0, 0, 0.5)'],
+      trackRadius: '4px',
+      thumbRadius: '2px',
+    },
+  },
+
+  icons: {
+    chevron:
+      '<svg viewBox="0 0 16 16"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>',
+  },
 });
-
-// A third slot, \`base\`, applies in every scheme - radii, type, spacing. See
-// packages/themes/ocean for one that uses it.
-export const ${exportName(name)} = defineTheme({ name: '${name}', light, dark });
 `;
 }
 
@@ -268,18 +298,18 @@ import { ${exportName(name)} } from '${packageName}';
 </ThemeProvider>;
 \`\`\`
 
-| Slot    | Overrides |
-| ------- | --------- |
-| \`base\`  | nothing   |
-| \`light\` | \`color\`   |
-| \`dark\`  | \`color\`   |
+| Section        | Sets                                      |
+| -------------- | ----------------------------------------- |
+| \`tokens\`     | every token, colours and shadows as pairs |
+| \`components\` | every token - the switch                  |
+| \`icons\`      | \`chevron\`                               |
 
 ## Next
 
-The generated theme already renders - retint it in
-[\`src/${name}.ts\`](./src/${name}.ts), then widen it. \`shadow\`, \`radius\`, \`font\`
-and \`space\` are all overridable; [\`themes/\`](../README.md) explains which slot each
-one belongs in and why.
+The generated theme is complete and already renders - retint it in
+[\`src/${name}.ts\`](./src/${name}.ts). Every token has a value because the contract
+requires one; [\`themes/\`](../README.md) explains the contract, the \`[light, dark]\` pairs,
+and when a theme should name a component token.
 
 ## Scripts
 

@@ -22,11 +22,12 @@ export { Switch, type SwitchProps, type SwitchSize } from '#/components/switch';
 export { usePreferredColorScheme, type ColorSchemePreference } from '#/theme/color-scheme';
 export {
   defineTheme,
-  resolveTheme,
+  extendTheme,
   type BatikTheme,
   type ColorScheme,
-  type ThemeDefinition,
-  type ThemeStyles,
+  type ThemeConfig,
+  type ThemeOverrides,
+  type TokenValue,
 } from '#/theme/define-theme';
 export { useColorScheme, useTheme } from '#/theme/theme-context';
 export { ThemeProvider, type ThemeProviderProps } from '#/theme/theme-provider';

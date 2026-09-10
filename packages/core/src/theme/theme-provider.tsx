@@ -1,9 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import type { StyleXStyles } from '@stylexjs/stylex';
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, type CSSProperties, type ReactNode } from 'react';
 
 import { usePreferredColorScheme, type ColorSchemePreference } from '#/theme/color-scheme';
-import { resolveTheme, type BatikTheme, type ColorScheme } from '#/theme/define-theme';
+import type { BatikTheme, ColorScheme } from '#/theme/define-theme';
 import { ThemeContext, type ThemeContextValue } from '#/theme/theme-context';
 
 import { color } from '../tokens/color.stylex';
@@ -29,6 +29,9 @@ export type ThemeProviderProps = {
    * The root is a real element in the layout, so an app usually has something
    * to say about its size - `minHeight: '100vh'` to make the page surface fill
    * the viewport, say - without wanting a second wrapper to say it in.
+   *
+   * Not the place to adjust the theme itself: its variables are set inline,
+   * and an inline declaration beats any class. `extendTheme()` is.
    */
   readonly style?: StyleXStyles;
 
@@ -54,11 +57,11 @@ const styles = stylex.create({
 /**
  * Applies a theme to everything inside it.
  *
- * The theme's variables are set on a real element rather than on `:root`,
- * which is what makes themes nest: a second provider deeper in the tree
- * restyles only its own subtree. That element also carries the page surface
- * (background, text colour, base type), so dropping a provider around an app
- * is enough to make it look themed.
+ * The theme's variables are set inline on a real element rather than on
+ * `:root`, which is what makes themes nest: a second provider deeper in the
+ * tree restyles only its own subtree. That element also carries the page
+ * surface (background, text colour, base type), so dropping a provider around
+ * an app is enough to make it look themed.
  */
 export function ThemeProvider({
   theme,
@@ -74,16 +77,19 @@ export function ThemeProvider({
     [theme, resolved],
   );
 
+  // The one place a `stylex.props()` spread and a `style` attribute meet, and
+  // on purpose. The dynamic `scheme` style comes back as an inline style, and
+  // so do the theme's variables - values `defineTheme()` resolved at runtime,
+  // not ones StyleX compiled - so the two are merged rather than letting one
+  // replace the other.
+  const { style: inline, ...props } = stylex.props(styles.surface, styles.scheme(resolved), style);
+
   return (
     <ThemeContext value={context}>
       <div
         data-batik-theme={theme.name}
-        {...stylex.props(
-          styles.surface,
-          styles.scheme(resolved),
-          resolveTheme(theme, resolved),
-          style,
-        )}
+        {...props}
+        style={{ ...inline, ...theme.vars[resolved] } as CSSProperties}
       >
         {children}
       </div>

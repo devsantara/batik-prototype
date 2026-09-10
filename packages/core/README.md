@@ -30,18 +30,18 @@ anyway to compile your own StyleX. See [Setting up the compiler](#setting-up-the
 
 ## What is in the box
 
-| Export                         | What it is                                                |
-| ------------------------------ | --------------------------------------------------------- |
-| `Button`                       | `solid` / `outline` / `ghost`, three sizes, disabled      |
-| `Input`                        | Three sizes, `invalid`, disabled, themed placeholder      |
-| `Card`                         | `elevated` / `outlined`, four padding steps               |
-| `Badge`                        | Five tones: neutral, accent, success, warning, danger     |
-| `Accordion`                    | `contained` / `separated`, optional `exclusive` rows      |
-| `Switch`                       | Three sizes, controlled or not, disabled                  |
-| `ThemeProvider`                | Applies a theme, resolves the colour scheme               |
-| `useTheme` / `useColorScheme`  | Read the active theme and the resolved scheme             |
-| `usePreferredColorScheme`      | The OS preference on its own, kept live                   |
-| `defineTheme` / `resolveTheme` | The theme contract, also at `@batik-prototype/core/theme` |
+| Export                        | What it is                                                                |
+| ----------------------------- | ------------------------------------------------------------------------- |
+| `Button`                      | `solid` / `outline` / `ghost`, three sizes, disabled                      |
+| `Input`                       | Three sizes, `invalid`, disabled, themed placeholder                      |
+| `Card`                        | `elevated` / `outlined`, four padding steps                               |
+| `Badge`                       | Five tones: neutral, accent, success, warning, danger                     |
+| `Accordion`                   | `contained` / `separated`, optional `exclusive` rows                      |
+| `Switch`                      | Three sizes, controlled or not, disabled                                  |
+| `ThemeProvider`               | Applies a theme, resolves the colour scheme                               |
+| `useTheme` / `useColorScheme` | Read the active theme and the resolved scheme                             |
+| `usePreferredColorScheme`     | The OS preference on its own, kept live                                   |
+| `defineTheme` / `extendTheme` | Build a theme against the contract, also at `@batik-prototype/core/theme` |
 
 Components are plain elements underneath — `<button>`, `<input>`, `<div>`, `<span>`,
 `<details>`, `<label>` — and forward every prop those accept, `ref` included. There is no wrapper, no
@@ -72,15 +72,15 @@ theme.schemes.includes('dark'); // false for a light-only theme
 Writing one is a single file. [`themes/`](../themes#readme) is the walkthrough;
 [`@batik-prototype/theme-ocean`](../themes/ocean#readme) is the fullest example.
 
-### The default theme is not a package
+### The default is unstyled
 
-The default values of the token variables in this package _are_ the Classic light palette.
-An app that installs nothing but `@batik-prototype/core` already renders a finished-looking
-UI, and [`@batik-prototype/theme-classic`](../themes/classic#readme) only has to supply
-the dark scheme.
+Every token variable defaults to `initial`, which leaves it unset: a declaration that reads it
+behaves as if it were never written. An app that renders these components with no theme gets
+them truly unstyled — the browser's own colours, type and spacing.
 
-That is the reason `ThemeDefinition.light` is optional rather than required: "this theme is
-already what the tokens say" is a real answer, and Classic is the theme that gives it.
+There is nothing for a theme to lean on. `ThemeProvider` still requires a theme, and a theme
+still sets every token, so when this package adds a token, every theme has to answer for it.
+[`themes/`](../themes#readme) explains the contract and how it is checked.
 
 ## Tokens
 
@@ -93,6 +93,7 @@ Everything a component renders comes from a variable group, so a theme can reach
 | `@batik-prototype/core/tokens/space.stylex`      | `space`                                |
 | `@batik-prototype/core/tokens/shape.stylex`      | `radius`, `border`, `shadow`           |
 | `@batik-prototype/core/tokens/switch.stylex`     | `toggle` — the switch's track and knob |
+| `@batik-prototype/core/tokens/icon.stylex`       | `icon` — the icons a component masks   |
 | `@batik-prototype/core/tokens/breakpoint.stylex` | `breakpoint` — media queries           |
 
 App code reads them the same way a component does:
@@ -111,11 +112,10 @@ Styles written that way are themed for free: they read the same variables the ac
 overrode.
 
 **`toggle` is the one component-scoped group.** A switch is painted rather than composed:
-its off track is neither `surface` nor `neutralSurface` in every theme, its knob is not
-always the sheet colour, and its corners do not follow `radius.pill` — Sunset squares the
-ramp off, and a switch that squares off with it stops reading as a switch. Wiring those to
-the shared groups would mean a theme could not move any of them without moving badges and
-cards too. Sizes stay out of it: track and thumb geometry is the component's.
+its off track is neither `surface` nor `neutralSurface` in every theme, its knob is not always
+the sheet colour, and its corners need not follow `radius.pill`. So it has tokens of its own, and a theme sets
+all nine like every other group — moving any of them moves the switch alone, never the badges
+and cards around it. Sizes stay out of it: track and thumb geometry is the component's.
 
 **`breakpoint` is `defineConsts`, not `defineVars`.** A media query is a condition the
 compiler resolves at build time, not a value a theme can override at runtime — there is no
@@ -160,10 +160,11 @@ drops one of the two — a bug that looks like the design system ignoring you.
 
 ## Setting up the compiler
 
-Batik packages ship their `stylex.create()` and `createTheme()` calls **uncompiled**. Your
-app's StyleX plugin reads them along with your own source and emits one stylesheet for the
-whole graph. That is what lets a theme installed from npm override variables this package
-declared: both halves are compiled together, against the same inputs.
+This package ships its `stylex.create()` and `defineVars()` calls **uncompiled**. Your app's
+StyleX plugin reads them along with your own source and emits one stylesheet for the whole
+graph, and the variable names it settles on are the ones `defineTheme()` reads back at runtime
+to set a theme's values. Theme packages are not part of this: a theme is data, with nothing for
+the compiler to read.
 
 For Vite that is the whole configuration:
 
@@ -193,7 +194,7 @@ one copy of it and one set of variable hashes.
 ## Two things a prototype has not settled
 
 - **No component tests.** The theme contract is covered
-  ([`src/theme/define-theme.test.ts`](./src/theme/define-theme.test.ts)), but rendering
+  ([`src/theme/build-theme.test.ts`](./src/theme/build-theme.test.ts)), but rendering
   assertions need a DOM environment and a testing library this workspace does not install
   yet.
 - **No RTL, no reduced-motion.** StyleX flips logical properties on its own and the

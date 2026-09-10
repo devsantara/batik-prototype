@@ -14,7 +14,7 @@
 
 A themeable design system built on [StyleX](https://stylexjs.com). One set of components,
 one token contract, and as many installable themes as you care to write — each a separate
-package that overrides the tokens and nothing else.
+package that gives every token a value, and does nothing else.
 
 **[Live demo](https://devsantara.github.io/batik-prototype/)** — every component, in all
 three themes, in light and dark.
@@ -38,33 +38,38 @@ import { ocean } from '@batik-prototype/theme-ocean';
 
 ## Packages
 
-| Package                                                              | What it is                                             |
-| -------------------------------------------------------------------- | ------------------------------------------------------ |
-| [`@batik-prototype/core`](./packages/core#readme)                    | Components, design tokens, and the theme runtime       |
-| [`@batik-prototype/theme-classic`](./packages/themes/classic#readme) | The default theme — slate and blue, plus a dark scheme |
-| [`@batik-prototype/theme-ocean`](./packages/themes/ocean#readme)     | Near-monochrome slate, one teal accent, tight corners  |
-| [`@batik-prototype/theme-sunset`](./packages/themes/sunset#readme)   | Warm greys, one terracotta accent, squared off, serif  |
-| [`@batik-prototype/example`](./apps/example#readme)                  | React + Vite app that consumes all of the above        |
-| [`@batik-prototype/config`](./packages/config#readme)                | Shared TypeScript and Vite+ configuration _(internal)_ |
-| [`@batik-prototype/create-package`](./tools/create-package#readme)   | The generator behind `vp create package` _(internal)_  |
-| [`@batik-prototype/create-theme`](./tools/create-theme#readme)       | The generator behind `vp create theme` _(internal)_    |
+| Package                                                              | What it is                                                    |
+| -------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [`@batik-prototype/core`](./packages/core#readme)                    | Components, the token contract, and the theme runtime         |
+| [`@batik-prototype/theme-classic`](./packages/themes/classic#readme) | Slate and blue, small rounded corners — the one to start from |
+| [`@batik-prototype/theme-ocean`](./packages/themes/ocean#readme)     | Near-monochrome slate, one teal accent, fully rounded         |
+| [`@batik-prototype/theme-sunset`](./packages/themes/sunset#readme)   | Warm greys, one terracotta accent, square corners, serif      |
+| [`@batik-prototype/example`](./apps/example#readme)                  | React + Vite app that consumes all of the above               |
+| [`@batik-prototype/config`](./packages/config#readme)                | Shared TypeScript and Vite+ configuration _(internal)_        |
+| [`@batik-prototype/create-package`](./tools/create-package#readme)   | The generator behind `vp create package` _(internal)_         |
+| [`@batik-prototype/create-theme`](./tools/create-theme#readme)       | The generator behind `vp create theme` _(internal)_           |
 
 [`themes/`](./packages/themes#readme) is the guide to writing a theme of your own.
 
 ## How the theming works
 
 `@batik-prototype/core` declares every colour, radius, font and spacing step as a StyleX
-variable group. Components read only those variables. A theme package imports the same
-groups and overrides them with `stylex.createTheme()`, and `<ThemeProvider>` applies the
-result to a subtree.
+variable, unset by default. Components read only those variables. A theme package is
+plain data: a value for every one of them, handed to `defineTheme()`, and `<ThemeProvider>`
+sets those values on a subtree.
 
-Two consequences are worth stating up front:
+Three consequences are worth stating up front:
 
+- **The default is unstyled, and every theme answers to one contract.** An app
+  with no theme renders its components truly unstyled. A theme has to set every token core names, so
+  adding one to core stops every theme compiling until it does — and a theme package
+  installed against a newer core says at load which tokens it is missing. See
+  [the contract](./packages/themes#the-contract).
 - **Components cost nothing at runtime.** They read CSS variables, not context, so
   switching a theme re-renders one provider and repaints — it does not re-render the tree.
-- **Themes are compiled with the app, not before it.** Batik packages ship their StyleX
-  calls uncompiled; your bundler's StyleX plugin reads them alongside your own source. That
-  is what lets a theme from npm override variables a component package declared. See
+- **Components are compiled with the app, not before it.** Core ships its StyleX calls
+  uncompiled; your bundler's StyleX plugin reads them alongside your own source, and
+  `defineTheme()` reads back the variable names it settles on. See
   [Setting up the compiler](./packages/core#setting-up-the-compiler).
 
 ## Working in this repo

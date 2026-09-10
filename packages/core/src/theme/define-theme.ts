@@ -1,80 +1,75 @@
-import type { CompiledStyles, StyleXArray } from '@stylexjs/stylex';
+import {
+  buildTheme,
+  mergeConfig,
+  type BuiltTheme,
+  type ThemeConfig as ConfigFor,
+  type ThemeOverrides as OverridesFor,
+} from '#/theme/build-theme';
+import { contract } from '#/theme/contract';
 
-/** A resolved colour scheme. There is no `'system'` here - that is a request, not a result. */
-export type ColorScheme = 'light' | 'dark';
+export type { ColorScheme, TokenValue } from '#/theme/build-theme';
 
 /**
- * The result of one or more `stylex.createTheme()` calls, in whatever shape is
- * convenient: a single theme, an array of them, or a nested array.
+ * Everything a theme sets, checked against this version of the contract.
  *
- * `CompiledStyles` is the union StyleX itself uses for a compiled theme object,
- * so anything assignable here can be handed straight to `stylex.props()`.
+ * Every token is required - under `tokens`, `components` and `icons` alike. Add
+ * one to core, or a whole group, and every theme stops compiling until it has a
+ * value for each.
  */
-export type ThemeStyles = StyleXArray<CompiledStyles | false | null | undefined>;
+export type ThemeConfig = ConfigFor<typeof contract>;
 
-/** What a theme package hands to {@link defineTheme}. */
-export type ThemeDefinition = {
-  /** Stable identifier, unique across themes. Used for `data-batik-theme` and for keying UI. */
-  readonly name: string;
+/** Any part of a {@link ThemeConfig}, down to one token - what {@link extendTheme} takes. */
+export type ThemeOverrides = OverridesFor<typeof contract>;
 
-  /**
-   * Variable overrides that apply in every colour scheme - type, spacing,
-   * radii. Anything whose right value does not depend on light versus dark.
-   */
-  readonly base?: ThemeStyles;
-
-  /**
-   * Variable overrides for the light scheme.
-   *
-   * Optional, and meaningfully so: leaving it out means "the token defaults are
-   * already right", which is exactly the case for the built-in Classic palette.
-   */
-  readonly light?: ThemeStyles;
-
-  /**
-   * Variable overrides for the dark scheme. A theme that omits this has no dark
-   * scheme; {@link resolveTheme} falls back to its light one so the theme still
-   * looks like itself rather than reverting to the defaults.
-   */
-  readonly dark?: ThemeStyles;
-};
-
-/** A theme definition plus the metadata {@link defineTheme} derives from it. */
-export type BatikTheme = ThemeDefinition & {
-  /** The schemes this theme actually implements, for building a scheme toggle. */
-  readonly schemes: readonly ColorScheme[];
-};
+/** A theme, ready for `ThemeProvider`. */
+export type BatikTheme = BuiltTheme<typeof contract>;
 
 /**
- * Package a theme's `createTheme()` output as a Batik theme.
- *
- * This is deliberately a plain function and not a compile-time API: the
- * `stylex.createTheme()` calls stay in the theme package, where the StyleX
- * compiler can see their literal values. All this adds is the contract and the
- * derived `schemes` list.
+ * Define a theme: a value for every token the contract names.
  *
  * ```ts
- * const light = stylex.createTheme(color, { accent: '#0d9488' });
- * const dark = stylex.createTheme(color, { accent: '#2dd4bf' });
- *
- * export const ocean = defineTheme({ name: 'ocean', light, dark });
+ * export const ocean = defineTheme('ocean', {
+ *   tokens: {
+ *     colors: { accent: ['#0e7490', '#5eead4'], ... },
+ *     radius: { sm: '3px', md: '6px', lg: '10px', pill: '999px' },
+ *     ...
+ *   },
+ *   icons: { chevron: '<svg viewBox="0 0 16 16">...</svg>' },
+ * });
  * ```
+ *
+ * A value is one string for every scheme or a `[light, dark]` pair, and a
+ * theme with no pairs anywhere has no dark scheme.
+ *
+ * This is a plain function, not a StyleX API, and has to be. StyleX reads
+ * `createTheme()` at compile time and only from a literal at the call site, so
+ * no helper can call it on a theme's behalf. Instead `defineTheme` reads each
+ * token's CSS variable off the compiled contract and hands `ThemeProvider` the
+ * values to set on it. Components are untouched - their styles are still
+ * static and compiled - and a theme stops being StyleX at all. It is data,
+ * which is what makes {@link extendTheme} possible.
+ *
+ * Checked twice. The config's type is the contract, so a theme in this repo
+ * that misses a token does not compile. And the check runs again here, against
+ * whichever core is installed, so a theme package built for an older one says
+ * which tokens it is missing instead of quietly leaving them unstyled.
  */
-export function defineTheme(definition: ThemeDefinition): BatikTheme {
-  return {
-    ...definition,
-    schemes: definition.dark === undefined ? ['light'] : ['light', 'dark'],
-  };
+export function defineTheme(name: string, config: ThemeConfig): BatikTheme {
+  return buildTheme(contract, name, config);
 }
 
 /**
- * The styles to apply for one scheme: the theme's scheme-independent overrides
- * followed by the scheme-specific ones.
+ * A new theme that is an existing one with some values changed.
  *
- * A theme with no dark scheme resolves dark to its light styles. Falling
- * through to the token defaults instead would swap the theme out from under the
- * user the moment they switched schemes.
+ * ```ts
+ * export const plum = extendTheme(classic, 'plum', {
+ *   tokens: { colors: { accent: ['#7c3aed', '#a78bfa'] } },
+ * });
+ * ```
+ *
+ * The base is complete, so the result is too - which makes this the shortest
+ * way to a theme that is not a whole palette of its own.
  */
-export function resolveTheme(theme: ThemeDefinition, scheme: ColorScheme): ThemeStyles {
-  return [theme.base, scheme === 'dark' ? (theme.dark ?? theme.light) : theme.light];
+export function extendTheme(base: BatikTheme, name: string, overrides: ThemeOverrides): BatikTheme {
+  return buildTheme(contract, name, mergeConfig(base.config, overrides));
 }

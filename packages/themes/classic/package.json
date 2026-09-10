@@ -1,7 +1,7 @@
 {
   "name": "@batik-prototype/theme-classic",
   "version": "0.2.0",
-  "description": "The default Batik theme: cool slate neutrals with a confident blue accent, plus a dark scheme",
+  "description": "Cool slate neutrals, a confident blue accent and small rounded corners, in light and dark",
   "keywords": [
     "classic",
     "design system",
@@ -46,11 +46,9 @@
   },
   "devDependencies": {
     "@batik-prototype/config": "workspace:*",
-    "@batik-prototype/core": "workspace:*",
-    "@stylexjs/stylex": "catalog:"
+    "@batik-prototype/core": "workspace:*"
   },
   "peerDependencies": {
-    "@batik-prototype/core": "workspace:^",
-    "@stylexjs/stylex": "^0.19.0"
+    "@batik-prototype/core": "workspace:^"
   }
 }

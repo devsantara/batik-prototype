@@ -3,62 +3,64 @@ import * as stylex from '@stylexjs/stylex';
 /**
  * Every colour a Batik component can render, and the only colours it may.
  *
- * The default values are the **Classic light** palette. That is what makes
- * Classic the default theme rather than a convention: an app that installs
- * nothing but `@batik-prototype/core` already renders a finished-looking UI,
- * and `@batik-prototype/theme-classic` only has to add the dark scheme.
+ * The defaults are `initial`: unset. A custom property set to `initial` is
+ * invalid wherever it is read, so the declaration reading it behaves as if it
+ * were never written and the element keeps the browser's own styling. That is
+ * what an app with no theme renders - truly unstyled - and what a theme built
+ * for an older core leaves unstyled for a token it has never heard of.
  *
- * A theme replaces these with `stylex.createTheme(color, { ... })`. Anything it
- * leaves out keeps the value below, so a theme is free to restyle three tokens
- * and inherit the other twenty.
+ * There is nothing to fall back on. A theme sets every one of these through
+ * `defineTheme()` - the contract requires it - so nothing a theme renders is
+ * borrowed from here. And the comments are the contract: what a token is
+ * *for* is what a theme author has to go on.
  */
 export const color = stylex.defineVars({
   // --- Surfaces ---------------------------------------------------------
   /** The page behind everything else. */
-  background: '#f8fafc',
+  background: 'initial',
   /** A raised sheet: cards, menus, the inside of an input. */
-  surface: '#ffffff',
+  surface: 'initial',
   /** `surface` under a pointer. */
-  surfaceHover: '#f1f5f9',
+  surfaceHover: 'initial',
 
   // --- Content ----------------------------------------------------------
   /** Body copy and headings. */
-  foreground: '#0f172a',
+  foreground: 'initial',
   /** Secondary copy: hints, placeholders, disabled labels. */
-  muted: '#64748b',
+  muted: 'initial',
 
   // --- Lines ------------------------------------------------------------
-  border: '#e2e8f0',
+  border: 'initial',
   /** Borders that have to be seen: a hovered input, a divider under a header. */
-  borderStrong: '#cbd5e1',
+  borderStrong: 'initial',
   /** The focus ring, which is the one colour that must never be subtle. */
-  ring: '#3b82f6',
+  ring: 'initial',
 
   // --- Accent -----------------------------------------------------------
-  // The single brand colour. A theme that changes nothing else should change
-  // this, which is why the interaction states are tokens rather than a
-  // computed lighten/darken a theme could not intercept.
-  accent: '#2563eb',
-  accentHover: '#1d4ed8',
-  accentActive: '#1e40af',
+  // The single brand colour. Its interaction states are tokens of their own
+  // rather than a computed lighten/darken, so a theme decides every one of
+  // them.
+  accent: 'initial',
+  accentHover: 'initial',
+  accentActive: 'initial',
   /** Copy drawn on top of `accent`. */
-  onAccent: '#ffffff',
+  onAccent: 'initial',
 
   // --- Status -----------------------------------------------------------
   /** Border and copy for an invalid field. */
-  danger: '#dc2626',
+  danger: 'initial',
 
   // --- Tonal surfaces ---------------------------------------------------
   // Badge fills. Each pairs a wash with the copy colour that stays readable on
   // it, so a component never has to guess a contrasting foreground.
-  neutralSurface: '#f1f5f9',
-  onNeutralSurface: '#334155',
-  accentSurface: '#dbeafe',
-  onAccentSurface: '#1e40af',
-  successSurface: '#dcfce7',
-  onSuccessSurface: '#166534',
-  warningSurface: '#fef3c7',
-  onWarningSurface: '#92400e',
-  dangerSurface: '#fee2e2',
-  onDangerSurface: '#991b1b',
+  neutralSurface: 'initial',
+  onNeutralSurface: 'initial',
+  accentSurface: 'initial',
+  onAccentSurface: 'initial',
+  successSurface: 'initial',
+  onSuccessSurface: 'initial',
+  warningSurface: 'initial',
+  onWarningSurface: 'initial',
+  dangerSurface: 'initial',
+  onDangerSurface: 'initial',
 });

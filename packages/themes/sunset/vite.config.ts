@@ -1,1 +1,1 @@
-export { default } from '@batik-prototype/config/vite/stylex-library';
+export { default } from '@batik-prototype/config/vite/library';

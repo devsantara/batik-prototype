@@ -4,14 +4,14 @@ import libraryConfig from './vite.library.config.ts';
 
 /**
  * The build configuration for a publishable package that authors StyleX -
- * `@batik-prototype/core` and every theme package.
+ * `@batik-prototype/core`. Theme packages do not: a theme is data, and builds
+ * with the plain library config.
  *
- * A StyleX package does not ship compiled CSS. It ships its `stylex.create`,
- * `defineVars` and `createTheme` calls intact, and the *consuming* app's StyleX
- * plugin reads them, hashes them and emits one stylesheet for the whole
- * dependency graph. That is what lets a theme installed from npm override
- * variables a component package declared: both halves are compiled together,
- * against the same hash inputs.
+ * A StyleX package does not ship compiled CSS. It ships its `stylex.create` and
+ * `defineVars` calls intact, and the *consuming* app's StyleX plugin reads
+ * them, hashes them and emits one stylesheet for the whole dependency graph.
+ * That is what gives the components and the app one set of variable names -
+ * the same ones `defineTheme()` reads back at runtime to set a theme's values.
  *
  * Everything below follows from that one fact.
  */

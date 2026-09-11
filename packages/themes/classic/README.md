@@ -1,6 +1,6 @@
 # `@batik-prototype/theme-classic`
 
-Cool slate neutrals with a confident blue accent. The default Batik theme.
+Cool slate neutrals, a confident blue accent and small rounded corners. The theme to start from.
 
 ```bash
 pnpm add @batik-prototype/theme-classic
@@ -15,33 +15,31 @@ import { classic } from '@batik-prototype/theme-classic';
 </ThemeProvider>;
 ```
 
-| Slot    | Overrides         |
-| ------- | ----------------- |
-| `base`  | nothing           |
-| `light` | nothing           |
-| `dark`  | `color`, `shadow` |
+| Section      | Sets                                                                               |
+| ------------ | ---------------------------------------------------------------------------------- |
+| `tokens`     | every token; `colors` and `shadow` as `[light, dark]` pairs, a small `radius` ramp |
+| `components` | `switch` — every token                                                             |
+| `icons`      | `chevron`                                                                          |
 
-## Why this theme is nearly empty
+## From default to theme
 
-The variable defaults in [`@batik-prototype/core`](../../packages/core#readme) _are_ the
-Classic light palette. That is what makes Classic the default theme rather than merely the
-recommended one: an app that installs no theme at all is already rendering it.
+Classic used to be the variables' default values in
+[`@batik-prototype/core`](../../core#readme), and this package only added the dark scheme —
+an app that installed no theme at all was already rendering Classic light.
 
-So there is nothing for `light` to say, and this package exists to do two things the
-defaults cannot — carry the dark scheme, and give the default a name a theme picker can
-list next to Ocean and Sunset.
-
-It is also the smallest working demonstration that `light` is optional. See
-[Writing one](../README.md#writing-one).
+Core's defaults are unset now, not Classic. So Classic is a complete theme like
+Ocean and Sunset, and its light values are the ones core used to carry, unchanged. It is still
+the one to start from: the most conventional palette, and the closest to what a new theme from
+`vp create theme` looks like before it is retinted.
 
 ## The dark scheme
 
-Two groups are overridden, and the second one is the interesting one:
+Two groups differ most between the schemes, and the second is the interesting one:
 
-- **`color`** — a near-black page, lifted surfaces, and an accent that _lightens_ toward
+- **`colors`** — a near-black page, lifted surfaces, and an accent that _lightens_ toward
   active rather than darkening. On a dark page "more pressed" reads as brighter.
 - **`shadow`** — the light palette tints its shadows slate; against a near-black page that
   tint is invisible, so the dark scheme trades it for opaque black at a higher alpha.
 
-Shadows are why a theme cannot put everything in `base`: elevation carries a colour, so it
-belongs to a scheme.
+Shadows are why a shadow token usually takes a pair: elevation carries a colour, so it belongs
+to a scheme.

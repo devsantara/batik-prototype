@@ -1,147 +1,116 @@
 import { defineTheme } from '@batik-prototype/core/theme';
-import { color } from '@batik-prototype/core/tokens/color.stylex';
-import { font } from '@batik-prototype/core/tokens/font.stylex';
-import { radius, shadow } from '@batik-prototype/core/tokens/shape.stylex';
-import { toggle } from '@batik-prototype/core/tokens/switch.stylex';
-import * as stylex from '@stylexjs/stylex';
 
-// Near-monochrome slate. The page and the sheets sitting on it are separated by
-// a hairline rather than a tint, and the only saturated colour in the whole
-// palette is the accent - which is itself pulled back from cyan towards teal so
-// it reads as ink, not as a highlighter.
-const lightColor = stylex.createTheme(color, {
-  background: '#fbfcfc',
-  surface: '#ffffff',
-  surfaceHover: '#f4f6f7',
+/** Near-monochrome slate with one teal accent, fully rounded, almost no shadow. */
+export const ocean = defineTheme('ocean', {
+  tokens: {
+    // Near-monochrome slate. The page and the sheets sitting on it are
+    // separated by a hairline rather than a tint, and the only saturated colour
+    // in the whole palette is the accent - which is itself pulled back from
+    // cyan towards teal so it reads as ink, not as a highlighter. Dark keeps
+    // the same restraint: a flat slate page, one step of lift for a surface,
+    // and an accent bright enough to be legible without glowing.
+    colors: {
+      background: ['#fbfcfc', '#0c1113'],
+      surface: ['#ffffff', '#12191c'],
+      surfaceHover: ['#f4f6f7', '#182226'],
 
-  foreground: '#101619',
-  muted: '#6b7c81',
+      foreground: ['#101619', '#e6ecee'],
+      muted: ['#6b7c81', '#8d9ba0'],
 
-  border: '#e8eced',
-  borderStrong: '#d2d9db',
-  ring: '#0e7490',
+      border: ['#e8eced', '#1e282c'],
+      borderStrong: ['#d2d9db', '#2d3a3f'],
+      ring: ['#0e7490', '#5eead4'],
 
-  accent: '#0e7490',
-  accentHover: '#155e75',
-  accentActive: '#164e63',
-  onAccent: '#ffffff',
+      accent: ['#0e7490', '#5eead4'],
+      accentHover: ['#155e75', '#99f6e4'],
+      accentActive: ['#164e63', '#ccfbf1'],
+      onAccent: ['#ffffff', '#08171a'],
 
-  danger: '#be123c',
+      danger: ['#be123c', '#fb7185'],
 
-  // Washes, not fills: light enough that a row of badges still reads as text
-  // on the page rather than as a row of coloured chips.
-  neutralSurface: '#f1f4f5',
-  onNeutralSurface: '#3b4b50',
-  accentSurface: '#e6f2f5',
-  onAccentSurface: '#155e75',
-  successSurface: '#e6f3ec',
-  onSuccessSurface: '#14684a',
-  warningSurface: '#f7efe0',
-  onWarningSurface: '#7c4d08',
-  dangerSurface: '#f8e9ec',
-  onDangerSurface: '#9f1239',
-});
+      // Washes, not fills: light enough that a row of badges still reads as
+      // text on the page rather than as a row of coloured chips.
+      neutralSurface: ['#f1f4f5', '#182226'],
+      onNeutralSurface: ['#3b4b50', '#c9d5d8'],
+      accentSurface: ['#e6f2f5', '#123138'],
+      onAccentSurface: ['#155e75', '#99f6e4'],
+      successSurface: ['#e6f3ec', '#12312a'],
+      onSuccessSurface: ['#14684a', '#a7f3d0'],
+      warningSurface: ['#f7efe0', '#33280f'],
+      onWarningSurface: ['#7c4d08', '#fde68a'],
+      dangerSurface: ['#f8e9ec', '#3a1219'],
+      onDangerSurface: ['#9f1239', '#fecdd3'],
+    },
 
-// Dark keeps the same restraint: a flat slate page, one step of lift for a
-// surface, and an accent bright enough to be legible without glowing.
-const darkColor = stylex.createTheme(color, {
-  background: '#0c1113',
-  surface: '#12191c',
-  surfaceHover: '#182226',
+    // A modern UI stack - Inter where it is installed, falling back to the same
+    // system faces as Classic. No web font is fetched. Tracking sits at zero:
+    // letterspaced small caps are decoration, and there is none here.
+    typography: {
+      family:
+        'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      familyMono: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
 
-  foreground: '#e6ecee',
-  muted: '#8d9ba0',
+      sizeSm: '0.8125rem',
+      sizeMd: '0.9375rem',
+      sizeLg: '1.0625rem',
 
-  border: '#1e282c',
-  borderStrong: '#2d3a3f',
-  ring: '#5eead4',
+      weightRegular: '400',
+      weightMedium: '500',
+      weightSemibold: '600',
 
-  accent: '#5eead4',
-  accentHover: '#99f6e4',
-  accentActive: '#ccfbf1',
-  onAccent: '#08171a',
+      lineHeightTight: '1.25',
+      lineHeightNormal: '1.5',
 
-  danger: '#fb7185',
+      trackingWide: '0em',
+    },
 
-  neutralSurface: '#182226',
-  onNeutralSurface: '#c9d5d8',
-  accentSurface: '#123138',
-  onAccentSurface: '#99f6e4',
-  successSurface: '#12312a',
-  onSuccessSurface: '#a7f3d0',
-  warningSurface: '#33280f',
-  onWarningSurface: '#fde68a',
-  dangerSurface: '#3a1219',
-  onDangerSurface: '#fecdd3',
-});
+    spacing: { xs: '4px', sm: '6px', md: '10px', lg: '14px', xl: '20px', xxl: '28px' },
 
-// Elevation is close to absent. Borders already separate a sheet from the page,
-// so a shadow only has to say "this one floats" - and only the largest one,
-// for things that genuinely overlay the page, is allowed to be noticed.
-const lightShadow = stylex.createTheme(shadow, {
-  sm: '0 1px 1px rgba(16, 22, 25, 0.03)',
-  md: '0 1px 2px rgba(16, 22, 25, 0.04), 0 4px 10px -6px rgba(16, 22, 25, 0.06)',
-  lg: '0 1px 2px rgba(16, 22, 25, 0.04), 0 12px 28px -14px rgba(16, 22, 25, 0.12)',
-});
+    // Fully rounded: every button, input and badge is a pill. Large surfaces -
+    // cards, accordions - stop at a generous 24px instead, because a card
+    // rounded to its full height would clip whatever sits in its corners.
+    radius: { sm: '999px', md: '999px', lg: '24px', pill: '999px' },
 
-const darkShadow = stylex.createTheme(shadow, {
-  sm: '0 1px 1px rgba(0, 0, 0, 0.3)',
-  md: '0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 10px -6px rgba(0, 0, 0, 0.45)',
-  lg: '0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -14px rgba(0, 0, 0, 0.6)',
-});
+    border: { width: '1px', widthStrong: '2px' },
 
-// The switch stays fully round even though the rest of the ramp tightens: it
-// is the one control whose shape carries meaning rather than style, and a
-// rounded track is what says "this slides" instead of "this is a checkbox".
-// Off is a hairline groove rather than a filled pill - the same restraint the
-// palette shows everywhere else - so the accent only appears when it means on.
-const lightToggle = stylex.createTheme(toggle, {
-  trackOff: '#f1f4f5',
-  trackOn: '#0e7490',
-  borderOff: '#d2d9db',
-  borderOn: '#0e7490',
+    // Elevation is close to absent. Borders already separate a sheet from the
+    // page, so a shadow only has to say "this one floats" - and only the
+    // largest one, for things that genuinely overlay the page, is allowed to be
+    // noticed.
+    shadow: {
+      sm: ['0 1px 1px rgba(16, 22, 25, 0.03)', '0 1px 1px rgba(0, 0, 0, 0.3)'],
+      md: [
+        '0 1px 2px rgba(16, 22, 25, 0.04), 0 4px 10px -6px rgba(16, 22, 25, 0.06)',
+        '0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 10px -6px rgba(0, 0, 0, 0.45)',
+      ],
+      lg: [
+        '0 1px 2px rgba(16, 22, 25, 0.04), 0 12px 28px -14px rgba(16, 22, 25, 0.12)',
+        '0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -14px rgba(0, 0, 0, 0.6)',
+      ],
+    },
+  },
 
-  thumbOff: '#ffffff',
-  thumbOn: '#ffffff',
-  thumbShadow: '0 1px 2px rgba(16, 22, 25, 0.14)',
-});
+  components: {
+    // Fully round, like everything else in Ocean. Off is a hairline groove
+    // rather than a filled pill, so the accent only appears when it means on.
+    // The knob takes the palette's own roles: white on light, and on dark the
+    // muted slate when off and near-black when on - dark enough to hold its
+    // shape against the pale teal track, where a white knob would wash out.
+    switch: {
+      trackOff: ['#f1f4f5', '#1e282c'],
+      trackOn: ['#0e7490', '#5eead4'],
+      borderOff: ['#d2d9db', '#2d3a3f'],
+      borderOn: ['#0e7490', '#5eead4'],
+      thumbOff: ['#ffffff', '#8d9ba0'],
+      thumbOn: ['#ffffff', '#08171a'],
+      thumbShadow: ['0 1px 2px rgba(16, 22, 25, 0.14)', '0 1px 2px rgba(0, 0, 0, 0.45)'],
+      trackRadius: '999px',
+      thumbRadius: '999px',
+    },
+  },
 
-// On dark the accent is a pale teal, so the knob has to go dark to stay
-// visible on top of it.
-const darkToggle = stylex.createTheme(toggle, {
-  trackOff: '#1e282c',
-  trackOn: '#5eead4',
-  borderOff: '#2d3a3f',
-  borderOn: '#5eead4',
-
-  thumbOff: '#8d9ba0',
-  thumbOn: '#08171a',
-  thumbShadow: '0 1px 2px rgba(0, 0, 0, 0.45)',
-});
-
-// Scheme-independent, so it goes in `base` and is written once. Corners are
-// tight enough to read as square at a glance while still softening the
-// hairlines - the ramp only opens up for the largest surfaces.
-const softShape = stylex.createTheme(radius, {
-  sm: '3px',
-  md: '6px',
-  lg: '10px',
-  pill: '999px',
-});
-
-// A modern UI stack - Inter where it is installed, falling back to the same
-// system faces as the default. No web font is fetched. Tracking sits at zero:
-// letterspaced small caps are decoration, and there is none here.
-const modernType = stylex.createTheme(font, {
-  family:
-    'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-  trackingWide: '0em',
-});
-
-/** Near-monochrome slate with one teal accent, tight corners, almost no shadow. */
-export const ocean = defineTheme({
-  name: 'ocean',
-  base: [softShape, modernType],
-  light: [lightColor, lightShadow, lightToggle],
-  dark: [darkColor, darkShadow, darkToggle],
+  icons: {
+    chevron:
+      '<svg viewBox="0 0 16 16"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>',
+  },
 });

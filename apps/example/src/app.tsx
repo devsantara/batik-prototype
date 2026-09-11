@@ -2,6 +2,7 @@ import {
   Button,
   ThemeProvider,
   useColorScheme,
+  type BatikTheme,
   type ColorSchemePreference,
 } from '@batik-prototype/core';
 import { breakpoint } from '@batik-prototype/core/tokens/breakpoint.stylex';
@@ -17,9 +18,20 @@ import { useState, type ReactNode } from 'react';
 
 import { Showcase } from '#/showcase';
 
+// No theme at all: the provider sets no variables, so every token falls back to
+// core's defaults, which are unset - so this is the components truly unstyled,
+// in the browser's own light or dark. `config` is only there to satisfy the type - nothing reads it unless
+// this is passed to `extendTheme()`, which it never is.
+const unthemed: BatikTheme = {
+  name: 'default',
+  schemes: ['light', 'dark'],
+  vars: { light: {}, dark: {} },
+  config: classic.config,
+};
+
 // Installing a theme is the whole integration: import it, and hand it to the
 // provider. Nothing in @batik-prototype/core knows these three exist.
-const THEMES = [classic, ocean, sunset];
+const THEMES = [unthemed, classic, ocean, sunset];
 
 const SCHEMES: readonly ColorSchemePreference[] = ['system', 'light', 'dark'];
 
@@ -112,7 +124,7 @@ function Toolbar({ themeName, onThemeChange, scheme, onSchemeChange, supportsDar
       <div {...stylex.props(styles.wordmark)}>
         <h1 {...stylex.props(styles.title)}>Batik</h1>
         <p {...stylex.props(styles.subtitle)}>
-          One component set, three installable themes, {resolved} right now.
+          One component set, core defaults or three installable themes, {resolved} right now.
         </p>
       </div>
 
@@ -156,10 +168,10 @@ function Toolbar({ themeName, onThemeChange, scheme, onSchemeChange, supportsDar
 }
 
 export function App() {
-  const [themeName, setThemeName] = useState(classic.name);
+  const [themeName, setThemeName] = useState(unthemed.name);
   const [scheme, setScheme] = useState<ColorSchemePreference>('system');
 
-  const theme = THEMES.find((candidate) => candidate.name === themeName) ?? classic;
+  const theme = THEMES.find((candidate) => candidate.name === themeName) ?? unthemed;
   const supportsDark = theme.schemes.includes('dark');
 
   return (

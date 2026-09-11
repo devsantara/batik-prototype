@@ -1,7 +1,7 @@
 {
   "name": "@batik-prototype/theme-sunset",
   "version": "0.3.0",
-  "description": "A warm amber-and-orange Batik theme with crisp, squared-off shapes, in light and dark",
+  "description": "A warm amber-and-orange Batik theme with square, unrounded shapes, in light and dark",
   "keywords": [
     "design system",
     "design tokens",
@@ -46,11 +46,9 @@
   },
   "devDependencies": {
     "@batik-prototype/config": "workspace:*",
-    "@batik-prototype/core": "workspace:*",
-    "@stylexjs/stylex": "catalog:"
+    "@batik-prototype/core": "workspace:*"
   },
   "peerDependencies": {
-    "@batik-prototype/core": "workspace:^",
-    "@stylexjs/stylex": "^0.19.0"
+    "@batik-prototype/core": "workspace:^"
   }
 }

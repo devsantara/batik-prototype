@@ -10,6 +10,7 @@ import {
 
 import { color } from '../tokens/color.stylex';
 import { font } from '../tokens/font.stylex';
+import { icon } from '../tokens/icon.stylex';
 import { border, radius } from '../tokens/shape.stylex';
 import { space } from '../tokens/space.stylex';
 
@@ -112,10 +113,17 @@ const styles = stylex.create({
     paddingInline: space.xl,
   },
 
+  // Painted rather than drawn: a square of `currentColor` masked by the theme's
+  // chevron, so the shape comes from the theme and the colour from here.
   chevron: {
+    backgroundColor: 'currentColor',
     color: color.muted,
     flexShrink: 0,
     height: '1rem',
+    maskImage: icon.chevron,
+    maskPosition: 'center',
+    maskRepeat: 'no-repeat',
+    maskSize: 'contain',
     transform: 'rotate(0deg)',
     transitionDuration: '120ms',
     transitionProperty: 'transform',
@@ -146,23 +154,13 @@ const groups = stylex.create({
   },
 });
 
+/**
+ * The theme's chevron, as a mask. `icon.chevron` is set on an ancestor like
+ * every other variable, so the shape is themed without this component reading
+ * any context.
+ */
 function Chevron({ open }: { readonly open: boolean }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      {...stylex.props(styles.chevron, open && styles.chevronOpen)}
-    >
-      <path
-        d="m4 6 4 4 4-4"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
+  return <span aria-hidden="true" {...stylex.props(styles.chevron, open && styles.chevronOpen)} />;
 }
 
 type RowProps = {

@@ -5,8 +5,9 @@ import { defineConfig } from 'vite-plus';
 export default defineConfig({
   plugins: [
     // Before the React plugin: StyleX has to read `stylex.create()` and
-    // `createTheme()` calls as they were written, and Fast Refresh's transform
-    // rewrites enough of a module to spoil that.
+    // `defineVars()` calls as they were written, and Fast Refresh's transform
+    // rewrites enough of a module to spoil that. The themes have none - they
+    // are data - so what it reads is core and this app.
     //
     // No `include` is needed for the workspace packages. The plugin transforms
     // every JS-like module it is handed and discovers which dependencies author

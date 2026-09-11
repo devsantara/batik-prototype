@@ -1,6 +1,6 @@
 # `@batik-prototype/theme-sunset`
 
-Warm greys with one terracotta accent, squared off, set in a serif. Light and dark.
+Warm greys with one terracotta accent, square corners, set in a serif. Light and dark.
 
 ```bash
 pnpm add @batik-prototype/theme-sunset
@@ -13,25 +13,26 @@ import { sunset } from '@batik-prototype/theme-sunset';
 <ThemeProvider theme={sunset}>{children}</ThemeProvider>;
 ```
 
-| Slot    | Overrides         |
-| ------- | ----------------- |
-| `base`  | `radius`, `font`  |
-| `light` | `color`, `shadow` |
-| `dark`  | `color`, `shadow` |
+| Section      | Sets                                                                         |
+| ------------ | ---------------------------------------------------------------------------- |
+| `tokens`     | every token; a square `radius` ramp (all `0px`), a serif `typography.family` |
+| `components` | `switch` — every token, squared to match the ramp                            |
+| `icons`      | `chevron`                                                                    |
 
 ## How far a theme can go
 
 Sunset exists to show that a theme's reach is not limited to colour. It is Ocean's mirror
 image on two axes at once:
 
-- **Shape.** Near-square corners against Ocean's soft ones. `pill` is squared off too — a
-  badge that stays round while its neighbours go sharp reads as an oversight rather than a
-  decision.
+- **Shape.** Square corners — no rounding at all — against Ocean's fully rounded ones. `pill` is
+  square too, and so is the switch — a badge that stays round while its neighbours go sharp
+  reads as an oversight rather than a decision.
 - **Type.** A serif stack replaces the system sans. No web font is involved: the stack
   resolves to a serif that is already on the machine, so the theme costs no extra bytes and
   no font-loading flash.
 
-Both live in `base`, because neither depends on the colour scheme.
+Both are single values rather than `[light, dark]` pairs, because neither depends on the
+colour scheme.
 
 The colour is as restrained as Ocean's. The page is an off-white with a trace of amber in
 it — enough to feel warm next to Ocean's slate, not enough to read as a tint — and the

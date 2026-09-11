@@ -215,14 +215,14 @@ It carries both halves of a package build: the `pack` policy that tsdown reads, 
 ### The StyleX variant
 
 `vite.stylex-library.config.ts` is `vite.library.config.ts` with `minify` turned off, and it
-is the config every runtime Batik package uses — `@batik-prototype/core` and all three
-themes.
+is the config `@batik-prototype/core` uses. The themes used to build with it too; a theme is
+data now, with no StyleX calls in it, so they build with the plain config.
 
 The reason is that a StyleX package does not ship compiled CSS. It ships its
-`stylex.create()`, `defineVars()` and `createTheme()` calls intact, and the _consuming_
-app's StyleX plugin reads them out of `dist`, hashes them, and emits one stylesheet for the
-whole dependency graph. That is what lets a theme installed from npm override variables a
-component package declared.
+`stylex.create()` and `defineVars()` calls intact, and the _consuming_ app's StyleX plugin
+reads them out of `dist`, hashes them, and emits one stylesheet for the whole dependency
+graph. That is what gives the components and the app one set of variable names — the ones
+`defineTheme()` reads back at runtime to set a theme's values.
 
 Minification is not known to break that — object keys and the StyleX import binding both
 survive it — but it turns the one input a downstream build depends on into something no

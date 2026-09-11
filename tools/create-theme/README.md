@@ -2,9 +2,8 @@
 
 The code generator behind `vp create theme`. It scaffolds a Batik theme package under
 `packages/themes/` with the workspace conventions already in place — the browser + library tsconfig
-pair, the [StyleX build config](../../packages/config#the-stylex-variant), the two
-hand-written `exports` maps, and peer dependencies on `@batik-prototype/core` and
-`@stylexjs/stylex`.
+pair, the [library build config](../../packages/config#readme), the two hand-written
+`exports` maps, and a peer dependency on `@batik-prototype/core`.
 
 ## Usage
 
@@ -29,18 +28,19 @@ Afterwards, write a changeset — CI fails a PR that changes a package without o
 pnpm changeset
 ```
 
-## The generated theme already renders
+## The generated theme is complete
 
 The point of difference from
 [`create-package`](../create-package#readme), which scaffolds a placeholder: this generator
-emits a working theme, not a stub. Its light scheme overrides only the accent family,
-because every other default in `@batik-prototype/core` is already a finished palette. Its
-dark scheme has to say more — a dark accent over the default near-white surfaces would be
-unreadable — so it ships a neutral dark ground to retint.
+emits a working theme, not a stub — and it has to. A theme is every value the contract names or it
+does not compile; core's own values are all unset. The generated one starts from Classic's
+neutrals with a violet accent, plus a violet dark ground, and a violet switch to match —
+every component token included, since components are part of the contract like everything
+else.
 
 So `vp create theme` followed by `vp run @batik-prototype/example#dev` shows you the new
-theme before you have chosen a single colour. Everything after that is editing hex values
-in one file.
+theme before you have chosen a single colour. Everything after that is editing values in one
+file.
 
 ## Development
 

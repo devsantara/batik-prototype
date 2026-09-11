@@ -37,13 +37,14 @@ does not have yet. That is deliberate: it keeps the app honest about what actual
 plugins: [stylex.vite({ useCSSLayers: true }), react()],
 ```
 
-StyleX comes first, because it has to read `stylex.create()` and `createTheme()` calls as
+StyleX comes first, because it has to read `stylex.create()` and `defineVars()` calls as
 they were written and Fast Refresh's transform rewrites enough of a module to spoil that.
 
 There is no `include` list for the workspace packages. The plugin transforms every JS-like
 module it is handed, and works out which dependencies author StyleX by looking for
 `@stylexjs/stylex` in their `dependencies` or `peerDependencies` — which is exactly why
-every Batik package declares it as a peer.
+`@batik-prototype/core` declares it as a peer. The theme packages do not, and need not: a
+theme is data, with nothing in it for StyleX to read.
 
 [`src/index.css`](./src/index.css) is the only hand-written CSS. StyleX has no stylesheet
 of its own to link: in dev the plugin serves the compiled CSS from a middleware, and in a

@@ -1,30 +1,30 @@
 import * as stylex from '@stylexjs/stylex';
 
 /**
- * Type tokens. Scheme-independent - a theme overrides these once, in its
- * `base` styles, rather than twice for light and dark.
+ * Type tokens. Unset by default, like every token - text keeps the browser's
+ * own family, size and weight until a theme sets them.
  *
- * Weights and line heights are strings because `defineVars` emits its values
- * into a CSS custom property verbatim; a bare `400` is a valid `font-weight`
- * but a bare `1.5` would be too, and quoting both keeps the file honest about
- * what actually lands in the stylesheet.
+ * Usually scheme-independent, so a theme writes each as a single value rather
+ * than a `[light, dark]` pair. Weights and line heights are strings - `'500'`,
+ * `'1.5'` - because a value lands in a CSS custom property verbatim, and
+ * writing it the way the stylesheet will hold it keeps a file honest about
+ * what it is setting.
  */
 export const font = stylex.defineVars({
-  family:
-    'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-  familyMono: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
+  family: 'initial',
+  familyMono: 'initial',
 
-  sizeSm: '0.8125rem',
-  sizeMd: '0.9375rem',
-  sizeLg: '1.0625rem',
+  sizeSm: 'initial',
+  sizeMd: 'initial',
+  sizeLg: 'initial',
 
-  weightRegular: '400',
-  weightMedium: '500',
-  weightSemibold: '600',
+  weightRegular: 'initial',
+  weightMedium: 'initial',
+  weightSemibold: 'initial',
 
-  lineHeightTight: '1.25',
-  lineHeightNormal: '1.5',
+  lineHeightTight: 'initial',
+  lineHeightNormal: 'initial',
 
   /** Applied to badges and other small uppercase-ish labels. */
-  trackingWide: '0.01em',
+  trackingWide: 'initial',
 });

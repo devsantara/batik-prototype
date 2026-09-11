@@ -1,5 +1,18 @@
 # @batik-prototype/theme-ocean
 
+## 0.5.0
+
+### Minor Changes
+
+- [#8](https://github.com/devsantara/batik-prototype/pull/8) [`3cd1d99`](https://github.com/devsantara/batik-prototype/commit/3cd1d990e4419b42d9e441dc723e2271f08eabcd) - **Breaking:** rebuilt on the new token contract, and requires the matching `@batik-prototype/core`. Every theme now sets every token itself — shared tokens, the switch and the icons, Classic included, whose light palette used to be core's defaults. Themes no longer depend on `@stylexjs/stylex`.
+  
+  Each theme now has a shape of its own: Classic has small rounded corners, Ocean is fully rounded — buttons, inputs, badges and the switch are pills, with cards and accordions at 24px — and Sunset is square, with no rounding at all. Colours are unchanged.
+
+### Patch Changes
+
+- Updated dependencies [[`3cd1d99`](https://github.com/devsantara/batik-prototype/commit/3cd1d990e4419b42d9e441dc723e2271f08eabcd)]:
+  - @batik-prototype/core@0.4.0
+
 ## 0.4.0
 
 ### Minor Changes

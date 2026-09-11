@@ -32,9 +32,7 @@
     "test": "vp test",
     "test:coverage": "vp test run --coverage",
     "test:watch": "vp test watch",
-    "changeset": "changeset",
-    "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish"
+    "changeset": "changeset"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "catalog:",

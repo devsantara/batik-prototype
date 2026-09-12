@@ -274,6 +274,12 @@ importers:
         specifier: 'catalog:'
         version: 19.2.8
 
+  packages/math:
+    devDependencies:
+      '@batik-prototype/config':
+        specifier: workspace:*
+        version: link:../config
+
   packages/themes/classic:
     devDependencies:
       '@batik-prototype/config':

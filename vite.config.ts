@@ -25,7 +25,7 @@ export default defineConfig({
     passWithNoTests: true,
   },
   fmt: {
-    ignorePatterns: ['pnpm-lock.yaml'],
+    ignorePatterns: ['pnpm-lock.yaml', '**/CHANGELOG.md'],
     singleQuote: true,
     printWidth: 100,
     sortPackageJson: true,

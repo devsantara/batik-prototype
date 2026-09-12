@@ -1,6 +1,6 @@
 {
   "name": "@batik-prototype/math",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Mathematical utilities for Batik design-system packages",
   "keywords": [
     "design system",
